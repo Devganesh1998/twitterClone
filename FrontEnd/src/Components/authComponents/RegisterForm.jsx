@@ -50,12 +50,38 @@ const RegisterForm = (props) => {
         </Form.Item>
 
         <Form.Item
+          label="User Tag"
+          name="userTag"
+          rules={[
+            {
+              required: true,
+              message: "Please input your User Tag!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
           label="Email address"
           name="email"
           rules={[
             {
               required: true,
               message: "Please input your mail Id!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Location"
+          name="location"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Location!",
             },
           ]}
         >
@@ -95,6 +121,45 @@ const RegisterForm = (props) => {
             {
               required: true,
               message: "Please input your Phone Number!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="About you"
+          name="description"
+          rules={[
+            {
+              required: true,
+              message: "Required",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Profile image url"
+          name="profileImgUrl"
+          rules={[
+            {
+              required: true,
+              message: "Required",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Banner image url"
+          name="posterImgUrl"
+          rules={[
+            {
+              required: true,
+              message: "Required",
             },
           ]}
         >

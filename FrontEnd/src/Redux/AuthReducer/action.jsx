@@ -99,24 +99,29 @@ export const registerUser = (payload) => (dispatch) => {
   dispatch(requestRegister());
   axios({
     method: "POST",
-    url: "http://localhost:5000/user/signup",
+    url: "http://localhost:5000/user/register",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })
     .then((res) => {
       const { data } = res;
-      data.isRegisterSuccess
-        ? dispatch(registerSuccess(data))
-        : dispatch(registerFailure(res.errormsg));
+      if (data.isRegisterSuccess) {
+        dispatch(registerSuccess(data));
+      } else {
+        dispatch(registerFailure(res.errormsg));
+      }
     })
-    .catch((err) => dispatch(registerFailure(err)));
+    .catch((err) => {
+      console.log(err);
+      dispatch(registerFailure(err));
+    });
 };
 
 export const loginUser = (payload) => (dispatch) => {
   dispatch(requestLogin());
   axios({
     method: "POST",
-    url: "http://localhost:5000/user/signin",
+    url: "http://localhost:5000/user/login",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })
@@ -132,10 +137,9 @@ export const loginUser = (payload) => (dispatch) => {
 export const logoutUser = (payload) => (dispatch) => {
   dispatch(requestLogout());
   axios({
-    method: "POST",
-    url: "http://localhost:5000/user/signout",
+    method: "GET",
+    url: "http://localhost:5000/user/logout",
     headers: { "Content-Type": "application/json;charset=utf-8" },
-    data: payload,
   })
     .then((res) => {
       const { data } = res;
@@ -149,8 +153,8 @@ export const logoutUser = (payload) => (dispatch) => {
 export const verifyAuth = (payload) => (dispatch) => {
   dispatch(requestVerifyAuth());
   axios({
-    method: "POST",
-    url: "http://localhost:5000/user/signout",
+    method: "GET",
+    url: "http://localhost:5000/user/verifyAuth",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })

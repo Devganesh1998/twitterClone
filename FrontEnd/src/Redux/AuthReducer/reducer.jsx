@@ -57,13 +57,13 @@ const Reducer = (state = initialState, action) => {
         isAuthenticated: false,
       };
     case REGISTER_SUCCESS:
-      const { Rusername, Remail } = action.payload;
+      const { username, email } = action.user.user;
       return {
         ...state,
         isRegisterSending: false,
         isRegisterSent: true,
-        username: Rusername,
-        email: Remail,
+        username: username,
+        email: email,
         isUserRegistered: true,
         isAuthenticated: true,
       };
@@ -72,7 +72,7 @@ const Reducer = (state = initialState, action) => {
         ...state,
         isRegisterSending: false,
         isRegisterError: true,
-        registerErrorMessage: action.payload,
+        registerErrorMessage: action.error,
       };
     case LOGIN_REQUEST:
       return {
@@ -87,13 +87,17 @@ const Reducer = (state = initialState, action) => {
         isAuthenticated: false,
       };
     case LOGIN_SUCCESS:
-      const { Lusername, Lemail } = action.payload;
+      const {
+        username: loginUsername,
+        email: loginEmail,
+      } = action.user.user;
+      console.log(action.user, action);
       return {
         ...state,
         isLoginSending: false,
         isLoginSent: true,
-        username: Lusername,
-        email: Lemail,
+        username: loginUsername,
+        email: loginEmail,
         isUserLoggedIn: true,
         isAuthenticated: true,
       };
@@ -103,7 +107,7 @@ const Reducer = (state = initialState, action) => {
         isLoginSending: false,
         isLoginError: true,
         isAuthenticated: false,
-        loginErrorMessage: action.payload,
+        loginErrorMessage: action.error,
       };
     case LOGOUT_REQUEST:
       return {
@@ -127,7 +131,7 @@ const Reducer = (state = initialState, action) => {
         ...state,
         isLogoutSending: false,
         isLogoutError: true,
-        logoutErrorMessage: action.payload,
+        logoutErrorMessage: action.error,
       };
     case VERIFY_AUTH_REQUEST:
       return {
@@ -138,13 +142,10 @@ const Reducer = (state = initialState, action) => {
         verifyAuthErrorMessage: "",
       };
     case VERIFY_AUTH_SUCCESS:
-      let { Vusername, Vemail } = action.payload;
       return {
         ...state,
         isVerifyAuthSending: false,
         isVerifyAuthSent: true,
-        username: Vusername,
-        email: Vemail,
         isAuthenticated: true,
       };
     case VERIFY_AUTH_FAILURE:
@@ -152,7 +153,7 @@ const Reducer = (state = initialState, action) => {
         ...state,
         isVerifyAuthSending: false,
         isVerifyAuthError: false,
-        verifyAuthErrorMessage: action.payload,
+        verifyAuthErrorMessage: action.error,
         username: "",
         email: "",
         isAuthenticated: false,
