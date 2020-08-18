@@ -1,0 +1,3 @@
+[submodule "BackEnd/twittercloneFlaskServer"]
+	path = BackEnd/twittercloneFlaskServer
+	url = https://github.com/Devganesh1998/twittercloneFlaskServer.git
