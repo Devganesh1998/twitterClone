@@ -1,5 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import authReducer from "./AuthReducer/reducer";
+import tweetReducer from "./TweetReducer/reducer";
+import profileReducer from "./ProfileReducer/reducer";
 import { verifyAuth } from "./AuthReducer/action";
 
 const thunk = (store) => (next) => (action) => {
@@ -27,7 +29,9 @@ const loadFromLocalStorage = () => {
 };
 
 const rootreducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  tweet: tweetReducer,
+  profile: profileReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -35,11 +39,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default function configureStore() {
   const store = createStore(
     rootreducer,
-    loadFromLocalStorage(),
+    // loadFromLocalStorage(),
     composeEnhancers(applyMiddleware(thunk))
   );
   store.dispatch(verifyAuth());
-  store.subscribe(() => saveToLocalStorage(store.getState()));
+  // store.subscribe(() => saveToLocalStorage(store.getState()));
   console.log(store.getState());
 
   return store;

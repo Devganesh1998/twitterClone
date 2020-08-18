@@ -8,8 +8,8 @@ import {
 } from "./actionType";
 
 const initialState = {
-  userProfile = {},
-  userTweets = [],
+  userProfile: {},
+  userTweets: [],
 
   isGetProfSending: false,
   isGetProfSent: false,
@@ -27,7 +27,7 @@ const Reducer = (state = initialState, action) => {
     case GET_PROFILE_REQUEST:
       return {
         ...state,
-        userProfile = {},
+        userProfile:{},
         isGetProfSending: true,
         isGetProfSent: false,
         isGetProfError: false,
@@ -36,7 +36,7 @@ const Reducer = (state = initialState, action) => {
     case GET_PROFILE_SUCCESS:
       return {
         ...state,
-        userProfile = action.payload,
+        userProfile: action.user,
         isGetProfSending: false,
         isGetProfSent: true,
       };
@@ -50,7 +50,7 @@ const Reducer = (state = initialState, action) => {
     case GET_USER_TWEETS_REQUEST:
       return {
         ...state,
-        userTweets = [],
+        userTweets: [],
         isUserTweetSending: true,
         isUserTweetSent: false,
         isUserTweetError: false,
@@ -59,7 +59,7 @@ const Reducer = (state = initialState, action) => {
     case GET_USER_TWEETS_SUCCESS:
       return {
         ...state,
-        userTweets = action.payload,
+        userTweets: action.payload,
         isUserTweetSending: false,
         isUserTweetSent: true,
       };

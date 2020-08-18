@@ -52,7 +52,7 @@ const Reducer = (state = initialState, action) => {
         ...state,
         isGetAllTweetsSending: false,
         isGetAllTweetsError: true,
-        getTweetErrorMessage: error,
+        getTweetErrorMessage: action.error,
       };
     case FOLLOW_USER_REQUEST:
       return {

@@ -108,7 +108,7 @@ export const addNewTweet = (payload) => (dispatch) => {
         ? dispatch(addNewTweetSuccess(data))
         : dispatch(addNewTweetFailure(res.errormsg));
     })
-    .catch((err) => dispatch(loginFailure(err)));
+    .catch((err) => dispatch(addNewTweetFailure(err)));
 };
 
 export const FollowUser = (payload) => (dispatch) => {
@@ -124,5 +124,5 @@ export const FollowUser = (payload) => (dispatch) => {
         ? dispatch(FollowSuccess(data))
         : dispatch(FollowFailure(res.errormsg));
     })
-    .catch((err) => dispatch(logoutFailure(err)));
+    .catch((err) => dispatch(FollowFailure(err)));
 };

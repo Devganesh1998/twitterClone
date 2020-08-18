@@ -80,7 +80,7 @@ export const getProfile = (payload) => (dispatch) => {
     .then((res) => {
       const { data } = res;
       data.isProfileFetched
-        ? dispatch(GetProfileSuccess(data.profile))
+        ? dispatch(GetProfileSuccess(data.profile[0]))
         : dispatch(GetProfileFailure(res.errormsg));
     })
     .catch((err) => dispatch(GetProfileFailure(err)));

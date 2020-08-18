@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import AuthPage from "../Pages/AuthPage";
-import Home from "../Pages/Home";
 import ProtectedRoute from "./ProtectedRoute";
 import { connect } from "react-redux";
 import Profile from "../Pages/Profile";
+import NewsFeed from "../Pages/NewsFeed";
 
 const Router = ({ isAuthenticated }) => {
   return (
@@ -14,7 +14,7 @@ const Router = ({ isAuthenticated }) => {
           exact
           path="/"
           isAuthenticated={isAuthenticated}
-          component={Home}
+          component={NewsFeed}
         />
         <ProtectedRoute
           exact
