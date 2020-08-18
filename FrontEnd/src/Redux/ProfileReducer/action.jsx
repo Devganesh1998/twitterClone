@@ -5,6 +5,9 @@ import {
   GET_USER_TWEETS_REQUEST,
   GET_USER_TWEETS_SUCCESS,
   GET_USER_TWEETS_FAILURE,
+  GET_ALL_PROFILES_REQUEST,
+  GET_ALL_PROFILES_SUCCESS,
+  GET_ALL_PROFILES_FAILURE
 } from "./actionType";
 
 import axios from "../axoisInstance";
@@ -49,6 +52,26 @@ const GetProfileFailure = (error) => {
   };
 };
 
+const requestAllProfile = () => {
+  return {
+    type: GET_ALL_PROFILES_REQUEST,
+  };
+};
+
+const AllProfileSuccess = (users) => {
+  return {
+    type: GET_ALL_PROFILES_SUCCESS,
+    users,
+  };
+};
+
+const AllProfileFailure = (error) => {
+  return {
+    type: GET_ALL_PROFILES_FAILURE,
+    error,
+  };
+};
+
 export const fetchUserTweets = (payload) => (dispatch) => {
   dispatch(requestUserTweets());
   axios({
@@ -84,4 +107,20 @@ export const getProfile = (payload) => (dispatch) => {
         : dispatch(GetProfileFailure(res.errormsg));
     })
     .catch((err) => dispatch(GetProfileFailure(err)));
+};
+
+export const getAllProfiles = () => (dispatch) => {
+  dispatch(requestAllProfile());
+  axios({
+    method: "GET",
+    url: `http://localhost:5000/user/getAllUsers`,
+    headers: { "Content-Type": "application/json;charset=utf-8" },
+  })
+    .then((res) => {
+      const { data } = res;
+      data.isUsersFetched
+        ? dispatch(AllProfileSuccess(data.users))
+        : dispatch(AllProfileFailure(res.errormsg));
+    })
+    .catch((err) => dispatch(AllProfileFailure(err)));
 };

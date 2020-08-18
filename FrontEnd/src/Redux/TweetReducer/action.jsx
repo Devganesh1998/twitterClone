@@ -115,7 +115,7 @@ export const FollowUser = (payload) => (dispatch) => {
   dispatch(requestFollow());
   axios({
     method: "GET",
-    url: "http://localhost:5000/user/logout",
+    url: "http://localhost:5000/user",
     headers: { "Content-Type": "application/json;charset=utf-8" },
   })
     .then((res) => {

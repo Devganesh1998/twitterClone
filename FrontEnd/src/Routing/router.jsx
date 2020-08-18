@@ -5,6 +5,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import { connect } from "react-redux";
 import Profile from "../Pages/Profile";
 import NewsFeed from "../Pages/NewsFeed";
+import ListAllUsers from "../Pages/ListAllUsers";
 
 const Router = ({ isAuthenticated }) => {
   return (
@@ -21,6 +22,12 @@ const Router = ({ isAuthenticated }) => {
           path="/profile"
           isAuthenticated={isAuthenticated}
           component={Profile}
+        />
+        <ProtectedRoute
+          exact
+          path="/listAllUsers"
+          isAuthenticated={isAuthenticated}
+          component={ListAllUsers}
         />
         <Route path="/auth" component={AuthPage} />
         <Route render={() => <h3>404 Not Found</h3>} />

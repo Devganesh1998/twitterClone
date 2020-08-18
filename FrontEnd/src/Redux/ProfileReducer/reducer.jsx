@@ -5,16 +5,26 @@ import {
   GET_USER_TWEETS_REQUEST,
   GET_USER_TWEETS_SUCCESS,
   GET_USER_TWEETS_FAILURE,
+  GET_ALL_PROFILES_REQUEST,
+  GET_ALL_PROFILES_SUCCESS, 
+  GET_ALL_PROFILES_FAILURE
 } from "./actionType";
 
 const initialState = {
   userProfile: {},
   userTweets: [],
+  allProfiles: [],
 
   isGetProfSending: false,
   isGetProfSent: false,
   isGetProfError: false,
   ProfileErrorMessage: "",
+
+  isallProfSending: false,
+  isallProfSent: false,
+  isallProfError: false,
+  allProfileErrorMessage: "",
+
 
   isUserTweetSending: false,
   isUserTweetSent: false,
@@ -69,6 +79,28 @@ const Reducer = (state = initialState, action) => {
         isUserTweetSending: false,
         isUserTweetError: true,
         UserTweetErrorMessage: action.error,
+      };
+    case GET_ALL_PROFILES_REQUEST:
+      return {
+        ...state,
+        allProfiles: [],
+        isallProfSending: true,
+        isallProfSent: false,
+        isallProfError: false,
+        allProfileErrorMessage: "",
+      };
+    case GET_ALL_PROFILES_SUCCESS:
+      return {
+        ...state,
+        allProfiles: action.users,
+        isallProfSending: false,
+        isallProfSent: true,
+      };
+    case GET_ALL_PROFILES_FAILURE:
+      return {
+        ...state,
+        isallProfError: true,
+        allProfileErrorMessage: action.error,
       };
     default:
       return state;

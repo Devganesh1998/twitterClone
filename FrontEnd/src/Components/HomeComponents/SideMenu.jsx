@@ -61,10 +61,14 @@ export default class SideMenu extends React.Component {
             <Menu.Item key="1">
               <Link to="/">NewsFeed</Link>
             </Menu.Item>
-            <Menu.Item key="2">Messages</Menu.Item>
+            <Menu.Item key="2">
+              <Link to="/listAllUsers">list All Users</Link>
+            </Menu.Item>
           </SubMenu>
           <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Profile">
-            <Menu.Item key="3"><Link to="/profile">My Profile</Link></Menu.Item>
+            <Menu.Item key="3">
+              <Link to="/profile">My Profile</Link>
+            </Menu.Item>
             <Menu.Item key="4">Profile settings</Menu.Item>
           </SubMenu>
           <SubMenu key="sub4" icon={<SettingOutlined />} title="Auth">

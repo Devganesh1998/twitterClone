@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styles from "../Styles/Home.module.css";
 import { fetchUserTweets, getProfile } from "../Redux/ProfileReducer/action";
 import TweetCard from "../Components/HomeComponents/TweetCard";
-
+import UserCard from "../Components/HomeComponents/UserCards";
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -21,15 +21,8 @@ class Profile extends React.Component {
     return (
       <div>
         <h3 style={{ margin: "auto" }}>My Profile</h3>
-        <div>
-          {userProfile &&
-            Object.keys(userProfile).map((key) => {
-              return (
-                <p>
-                  {key} : {userProfile[key]}
-                </p>
-              );
-            })}
+        <div className={styles.profileCard}>
+          {userProfile ? <UserCard {...userProfile} /> : ""}
         </div>
         {userTweets &&
           userTweets.map((element) => {

@@ -7,11 +7,14 @@ import {
 } from "../Redux/TweetReducer/action";
 import AddTweet from "../Components/HomeComponents/AddTweet";
 import TweetCard from "../Components/HomeComponents/TweetCard";
+import { Button } from "antd";
 
 class NewsFeed extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      page: 1,
+    };
   }
 
   componentDidMount() {
@@ -20,6 +23,12 @@ class NewsFeed extends React.Component {
       page: 1,
     });
   }
+
+  handleNextPage = () => {
+    console.log("this.state.page", this.state.page);
+    this.props.fetchAllTweets({ page: this.state.page + 1 });
+    this.setState({ page: this.state.page + 1 });
+  };
 
   render() {
     const { tweets, FollowUser } = this.props;
@@ -33,7 +42,11 @@ class NewsFeed extends React.Component {
             tweets.map((element) => {
               return <TweetCard FollowUser={FollowUser} {...element} />;
             })}
+          <Button type="primary" style={{margin: "20px"}} onClick={this.handleNextPage}>
+            Load More
+          </Button>
         </div>
+
       </React.Fragment>
     );
   }

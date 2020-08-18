@@ -39,11 +39,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default function configureStore() {
   const store = createStore(
     rootreducer,
-    // loadFromLocalStorage(),
+    loadFromLocalStorage(),
     composeEnhancers(applyMiddleware(thunk))
   );
   store.dispatch(verifyAuth());
-  // store.subscribe(() => saveToLocalStorage(store.getState()));
+  store.subscribe(() => saveToLocalStorage(store.getState()));
   console.log(store.getState());
 
   return store;
