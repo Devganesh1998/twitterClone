@@ -1,0 +1,26 @@
+.homeCont {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+}
+
+.switchCont {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-content: center;
+  background-color: #1890FF;
+}
+
+.sideMenuCont {
+  width: max-content;
+  height: 100vh;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+}
+
+.sideMenu {
+    height: 100vh;
+}

@@ -1,12 +1,12 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import AuthPage from "../Pages/AuthPage";
-import Home from "../Pages/Home";
 import ProtectedRoute from "./ProtectedRoute";
 import { connect } from "react-redux";
+import NewsFeed from "../Pages/NewsFeed";
 import Profile from "../Pages/Profile";
 
-const Router = ({ isAuthenticated }) => {
+
+const HomeRouter = ({ isAuthenticated }) => {
   return (
     <React.Fragment>
       <Switch>
@@ -14,15 +14,13 @@ const Router = ({ isAuthenticated }) => {
           exact
           path="/"
           isAuthenticated={isAuthenticated}
-          component={Home}
+          component={NewsFeed}
         />
         <ProtectedRoute
-          exact
           path="/profile"
           isAuthenticated={isAuthenticated}
           component={Profile}
         />
-        <Route path="/auth" component={AuthPage} />
         <Route render={() => <h3>404 Not Found</h3>} />
       </Switch>
     </React.Fragment>
@@ -35,4 +33,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Router);
+export default connect(mapStateToProps)(HomeRouter);
