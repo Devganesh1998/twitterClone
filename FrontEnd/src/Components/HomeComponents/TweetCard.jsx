@@ -3,10 +3,7 @@ import { Card } from "antd";
 
 const { Meta } = Card;
 
-const TweetCard = ({ title, description, likes, createdAt, userId, FollowUser }) => {
-    const handleFollow = () => {
-        FollowUser(userId);
-    }
+const TweetCard = ({ title, description, likes, createdAt}) => {
   return (
     <Card
       hoverable
@@ -18,8 +15,6 @@ const TweetCard = ({ title, description, likes, createdAt, userId, FollowUser })
       }
       actions={[
         <p>Like</p>,
-        <p onClick={handleFollow}>Follow</p>,
-        <p>UnFollow</p>,
       ]}
     >
       <Meta title={title} description={description} />

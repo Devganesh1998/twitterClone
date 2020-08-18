@@ -1,8 +1,8 @@
 import React from "react";
 import { getAllProfiles } from "../Redux/ProfileReducer/action";
 import { connect } from "react-redux";
-import UserCards from "../Components/HomeComponents/UserCards"
-import { FollowUser } from "../Redux/TweetReducer/action";
+import UserCards from "../Components/HomeComponents/UserCards";
+import { FollowUser, unFollowUser } from "../Redux/TweetReducer/action";
 
 class ListAllUsers extends React.Component {
   constructor(props) {
@@ -15,11 +15,18 @@ class ListAllUsers extends React.Component {
   }
 
   render() {
-    const { allProfiles, FollowUser } = this.props;
+    const { allProfiles, FollowUser, unFollowUser, email } = this.props;
     return (
       <div>
         {allProfiles &&
-          allProfiles.map((Element) => <UserCards FollowUser={FollowUser} {...Element} />)}
+          allProfiles.map((Element) => (
+            <UserCards
+              FollowUser={FollowUser}
+              unFollowUser={unFollowUser}
+              currEmail={email}
+              {...Element}
+            />
+          ))}
       </div>
     );
   }
@@ -28,12 +35,14 @@ class ListAllUsers extends React.Component {
 const mapStateToProps = (state) => {
   return {
     allProfiles: state.profile.allProfiles,
+    email: state.auth.email,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getAllUsers: () => dispatch(getAllProfiles()),
-    FollowUser: () => dispatch(FollowUser()),
+    FollowUser: (payload) => dispatch(FollowUser(payload)),
+    unFollowUser: (payload) => dispatch(unFollowUser(payload)),
   };
 };
 

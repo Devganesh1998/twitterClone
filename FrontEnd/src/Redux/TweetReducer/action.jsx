@@ -7,7 +7,10 @@ import {
   FOLLOW_USER_FAILURE,
   ADD_NEW_TWEET_REQUEST,
   ADD_NEW_TWEET_SUCCESS,
-  ADD_NEW_TWEET_FAILURE
+  ADD_NEW_TWEET_FAILURE,
+  UN_FOLLOW_USER_REQUEST,
+  UN_FOLLOW_USER_SUCCESS,
+  UN_FOLLOW_USER_FAILURE
 } from "./actionType";
 
 import axios from "../axoisInstance";
@@ -58,16 +61,34 @@ const requestFollow = () => {
   };
 };
 
-const FollowSuccess = (payload) => {
+const FollowSuccess = () => {
   return {
     type: FOLLOW_USER_SUCCESS,
-    payload,
   };
 };
 
 const FollowFailure = (error) => {
   return {
     type: FOLLOW_USER_FAILURE,
+    error,
+  };
+};
+
+const requestunFollow = () => {
+  return {
+    type: UN_FOLLOW_USER_REQUEST,
+  };
+};
+
+const unFollowSuccess = () => {
+  return {
+    type: UN_FOLLOW_USER_SUCCESS,
+  };
+};
+
+const unFollowFailure = (error) => {
+  return {
+    type: UN_FOLLOW_USER_FAILURE,
     error,
   };
 };
@@ -114,15 +135,33 @@ export const addNewTweet = (payload) => (dispatch) => {
 export const FollowUser = (payload) => (dispatch) => {
   dispatch(requestFollow());
   axios({
-    method: "GET",
-    url: "http://localhost:5000/user",
+    method: "POST",
+    url: "http://localhost:5000/profile/follow",
     headers: { "Content-Type": "application/json;charset=utf-8" },
+    data: payload
   })
     .then((res) => {
       const { data } = res;
-      data.isLogoutSuccess
-        ? dispatch(FollowSuccess(data))
+      data.isProfileFollowed
+        ? dispatch(FollowSuccess())
         : dispatch(FollowFailure(res.errormsg));
     })
     .catch((err) => dispatch(FollowFailure(err)));
+};
+
+export const unFollowUser = (payload) => (dispatch) => {
+  dispatch(requestunFollow());
+  axios({
+    method: "POST",
+    url: "http://localhost:5000/profile/unfollow",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
+    data: payload
+  })
+    .then((res) => {
+      const { data } = res;
+      data.isProfileUnfollowed
+        ? dispatch(unFollowSuccess())
+        : dispatch(unFollowFailure(res.errormsg));
+    })
+    .catch((err) => dispatch(unFollowFailure(err)));
 };

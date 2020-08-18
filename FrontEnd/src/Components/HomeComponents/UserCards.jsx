@@ -20,12 +20,18 @@ const TweetCard = (props) => {
     dob,
     profileImgUrl,
     posterImgUrl,
+    currEmail,
   } = props;
+
   const handleFollow = () => {
-    props.FollowUser(id);
+    const payload = { email: currEmail, parentId: id };
+    console.log(payload);
+    props.FollowUser(payload);
   };
   const handleUnFollow = () => {
-    props.unFollow(id);
+    const payload = { email: currEmail, parentId: id };
+    console.log(payload);
+    props.unFollowUser(payload);
   };
   return (
     <Card

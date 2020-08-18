@@ -8,6 +8,9 @@ import {
   ADD_NEW_TWEET_REQUEST,
   ADD_NEW_TWEET_SUCCESS,
   ADD_NEW_TWEET_FAILURE,
+  UN_FOLLOW_USER_REQUEST,
+  UN_FOLLOW_USER_SUCCESS,
+  UN_FOLLOW_USER_FAILURE,
 } from "./actionType";
 
 const initialState = {
@@ -23,10 +26,18 @@ const initialState = {
   followUserError: false,
   followErrorMessage: "",
 
+  unfollowUserSending: false,
+  unfollowUserSent: false,
+  unfollowUserError: false,
+  unfollowErrorMessage: "",
+
   addTweetSending: false,
   addTweetSent: false,
   addTweetError: false,
   addTweetErrorMessage: "",
+
+  isFollowSuccess: false,
+  isUnFollowSuccess: false,
 };
 
 const Reducer = (state = initialState, action) => {
@@ -61,22 +72,44 @@ const Reducer = (state = initialState, action) => {
         followUserSent: false,
         followUserError: false,
         followErrorMessage: "",
+        isFollowSuccess: false,
       };
     case FOLLOW_USER_SUCCESS:
       return {
         ...state,
         followUserSending: false,
         followUserSent: true,
-        followUserError: false,
-        followErrorMessage: "",
+        isFollowSuccess: true,
       };
     case FOLLOW_USER_FAILURE:
       return {
         ...state,
         followUserSending: false,
-        followUserSent: false,
         followUserError: true,
         followErrorMessage: action.error,
+      };
+    case UN_FOLLOW_USER_REQUEST:
+      return {
+        ...state,
+        unfollowUserSending: true,
+        unfollowUserSent: false,
+        unfollowUserError: false,
+        unfollowErrorMessage: "",
+        isUnFollowSuccess: false,
+      };
+    case UN_FOLLOW_USER_SUCCESS:
+      return {
+        ...state,
+        unfollowUserSending: false,
+        unfollowUserSent: true,
+        isUnFollowSuccess: true,
+      };
+    case UN_FOLLOW_USER_FAILURE:
+      return {
+        ...state,
+        unfollowUserSending: true,
+        unfollowUserError: true,
+        unfollowErrorMessage: action.error,
       };
     case ADD_NEW_TWEET_REQUEST:
       return {
