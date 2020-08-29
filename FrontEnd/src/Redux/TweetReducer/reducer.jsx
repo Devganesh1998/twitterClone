@@ -11,6 +11,9 @@ import {
   UN_FOLLOW_USER_REQUEST,
   UN_FOLLOW_USER_SUCCESS,
   UN_FOLLOW_USER_FAILURE,
+  LIKE_TWEET_REQUEST,
+  LIKE_TWEET_SUCCESS,
+  LIKE_TWEET_FAILURE
 } from "./actionType";
 
 const initialState = {
@@ -36,6 +39,11 @@ const initialState = {
   addTweetError: false,
   addTweetErrorMessage: "",
 
+  likeTweetSending: false,
+  likeTweetSent: false,
+  likeTweetError: false,
+  likeTweetErrorMessage: "",
+
   isFollowSuccess: false,
   isUnFollowSuccess: false,
 };
@@ -52,7 +60,6 @@ const Reducer = (state = initialState, action) => {
         getTweetErrorMessage: "",
       };
     case GET_ALL_TWEETS_SUCCESS:
-      console.log("The prev tweets", state.tweets);
       return {
         ...state,
         tweets: [
@@ -138,6 +145,28 @@ const Reducer = (state = initialState, action) => {
         addTweetSent: false,
         addTweetError: true,
         addTweetErrorMessage: action.error,
+      };
+    case LIKE_TWEET_REQUEST:
+      return {
+        ...state,
+        likeTweetSending: true,
+        likeTweetSent: false,
+        likeTweetError: false,
+        likeTweetErrorMessage: "",
+      };
+    case LIKE_TWEET_SUCCESS:
+      return {
+        ...state,
+        likeTweetSending: false,
+        likeTweetSent: true,
+      };
+    case LIKE_TWEET_FAILURE:
+      return {
+        ...state,
+        likeTweetSending: false,
+        likeTweetSent: false,
+        likeTweetError: true,
+        likeTweetErrorMessage: action.error,
       };
     default:
       return state;

@@ -25,8 +25,8 @@ class Profile extends React.Component {
           {userProfile ? <UserCard {...userProfile} /> : ""}
         </div>
         {userTweets &&
-          userTweets.map((element) => {
-            return <TweetCard {...element} />;
+          userTweets.map((element, index) => {
+            return <TweetCard {...element} key={index} />;
           })}
       </div>
     );

@@ -1,9 +1,25 @@
 import React from "react";
-import { Card } from "antd";
+import { Card, Button } from "antd";
+import { LikeOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
-const TweetCard = ({ title, description, likes, createdAt}) => {
+const TweetCard = ({
+  title,
+  description,
+  likes,
+  createdAt,
+  email,
+  likeTweet,
+  id,
+}) => {
+  const handleLikeTweet = () => {
+    likeTweet({
+      tweetId: id,
+      likedUserMail: email,
+    });
+  };
+
   return (
     <Card
       hoverable
@@ -14,11 +30,18 @@ const TweetCard = ({ title, description, likes, createdAt}) => {
         />
       }
       actions={[
-        <p>Like</p>,
+        <Button
+          type="primary"
+          shape="round"
+          icon={<LikeOutlined />}
+          size="large"
+          onClick={handleLikeTweet}
+        >
+          {likes} Likes
+        </Button>,
       ]}
     >
       <Meta title={title} description={description} />
-      <p>Likes : {likes}</p>
       <p>Created At : {createdAt}</p>
     </Card>
   );

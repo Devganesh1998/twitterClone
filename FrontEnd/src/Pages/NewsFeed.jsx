@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchAllTweets, addNewTweet } from "../Redux/TweetReducer/action";
+import { fetchAllTweets, addNewTweet, likeTweet } from "../Redux/TweetReducer/action";
 import AddTweet from "../Components/HomeComponents/AddTweet";
 import TweetCard from "../Components/HomeComponents/TweetCard";
 import { Button } from "antd";
@@ -29,7 +29,7 @@ class NewsFeed extends React.Component {
   };
 
   render() {
-    const { tweets } = this.props;
+    const { tweets, likeTweet, email } = this.props;
     return (
       <React.Fragment>
         <div>
@@ -38,7 +38,7 @@ class NewsFeed extends React.Component {
         <div>
           {tweets &&
             tweets.map((element) => {
-              return <TweetCard {...element} />;
+              return <TweetCard likeTweet={likeTweet} email={email} {...element} key={element.id}/>;
             })}
           <Button
             type="primary"
@@ -63,6 +63,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchAllTweets: (payload) => dispatch(fetchAllTweets(payload)),
     addNewTweet: (payload) => dispatch(addNewTweet(payload)),
+    likeTweet: (payload) => dispatch(likeTweet(payload)),
   };
 };
 

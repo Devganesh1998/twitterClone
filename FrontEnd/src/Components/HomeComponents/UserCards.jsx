@@ -41,6 +41,7 @@ const TweetCard = (props) => {
       cover={
         <img
           alt="example"
+          style={{margin: "auto", marginTop: "10px",height: "200px", width: "200px"}}
           src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
         />
       }

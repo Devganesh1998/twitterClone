@@ -21,6 +21,7 @@ class ListAllUsers extends React.Component {
         {allProfiles &&
           allProfiles.map((Element) => (
             <UserCards
+              key={Element.id}
               FollowUser={FollowUser}
               unFollowUser={unFollowUser}
               currEmail={email}

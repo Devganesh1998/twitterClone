@@ -11,7 +11,11 @@ import {
   UN_FOLLOW_USER_REQUEST,
   UN_FOLLOW_USER_SUCCESS,
   UN_FOLLOW_USER_FAILURE,
+  LIKE_TWEET_REQUEST,
+  LIKE_TWEET_SUCCESS,
+  LIKE_TWEET_FAILURE,
 } from "./actionType";
+import { getAllProfiles } from "../ProfileReducer/action";
 
 import axios from "../axoisInstance";
 
@@ -93,6 +97,25 @@ const unFollowFailure = (error) => {
   };
 };
 
+const requestLikeTweet = () => {
+  return {
+    type: LIKE_TWEET_REQUEST,
+  };
+};
+
+const LikeTweetSuccess = () => {
+  return {
+    type: LIKE_TWEET_SUCCESS,
+  };
+};
+
+const LikeTweetFailure = (error) => {
+  return {
+    type: LIKE_TWEET_FAILURE,
+    error,
+  };
+};
+
 export const fetchAllTweets = (payload) => (dispatch) => {
   dispatch(requestAllTweets());
   axios({
@@ -102,7 +125,6 @@ export const fetchAllTweets = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
-      console.log("fetall ", res.data);
       const { data } = res;
       if (data.isTweetFetched) {
         dispatch(getAllTweetsSuccess(data.tweets));
@@ -128,7 +150,7 @@ export const addNewTweet = (payload) => (dispatch) => {
       dispatch(
         fetchAllTweets({
           page: 1,
-          email: payload.email
+          email: payload.email,
         })
       );
       const { data } = res;
@@ -149,6 +171,7 @@ export const FollowUser = (payload) => (dispatch) => {
   })
     .then((res) => {
       const { data } = res;
+      dispatch(getAllProfiles());
       data.isProfileFollowed
         ? dispatch(FollowSuccess())
         : dispatch(FollowFailure(res.errormsg));
@@ -165,10 +188,34 @@ export const unFollowUser = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
+      dispatch(getAllProfiles());
       const { data } = res;
       data.isProfileUnfollowed
         ? dispatch(unFollowSuccess())
         : dispatch(unFollowFailure(res.errormsg));
     })
     .catch((err) => dispatch(unFollowFailure(err)));
+};
+
+export const likeTweet = (payload) => (dispatch) => {
+  dispatch(requestLikeTweet());
+  axios({
+    method: "POST",
+    url: "http://localhost:5000/tweet/like",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
+    data: payload,
+  })
+    .then((res) => {
+      dispatch(
+        fetchAllTweets({
+          page: 1,
+          email: payload.likedUserMail,
+        })
+      );
+      const { data } = res;
+      data.isTweetLiked
+        ? dispatch(LikeTweetSuccess())
+        : dispatch(LikeTweetFailure(res.errormsg));
+    })
+    .catch((err) => dispatch(LikeTweetFailure(err)));
 };
