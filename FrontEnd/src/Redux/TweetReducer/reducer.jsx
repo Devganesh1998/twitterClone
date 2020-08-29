@@ -52,9 +52,13 @@ const Reducer = (state = initialState, action) => {
         getTweetErrorMessage: "",
       };
     case GET_ALL_TWEETS_SUCCESS:
+      console.log("The prev tweets", state.tweets);
       return {
         ...state,
-        tweets: action.tweets,
+        tweets: [
+          ...state.tweets,
+          ...action.tweets
+        ],
         isGetAllTweetsSending: false,
         isGetAllTweetsSent: true,
       };

@@ -62,7 +62,7 @@ export default class SideMenu extends React.Component {
               <Link to="/">NewsFeed</Link>
             </Menu.Item>
             <Menu.Item key="2">
-              <Link to="/listAllUsers">list All Users</Link>
+              <Link to="/listAllUsers">Explore</Link>
             </Menu.Item>
           </SubMenu>
           <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Profile">

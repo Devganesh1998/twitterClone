@@ -10,7 +10,7 @@ import {
   ADD_NEW_TWEET_FAILURE,
   UN_FOLLOW_USER_REQUEST,
   UN_FOLLOW_USER_SUCCESS,
-  UN_FOLLOW_USER_FAILURE
+  UN_FOLLOW_USER_FAILURE,
 } from "./actionType";
 
 import axios from "../axoisInstance";
@@ -102,6 +102,7 @@ export const fetchAllTweets = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
+      console.log("fetall ", res.data);
       const { data } = res;
       if (data.isTweetFetched) {
         dispatch(getAllTweetsSuccess(data.tweets));
@@ -124,6 +125,12 @@ export const addNewTweet = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
+      dispatch(
+        fetchAllTweets({
+          page: 1,
+          email: payload.email
+        })
+      );
       const { data } = res;
       data.isTweetAdded
         ? dispatch(addNewTweetSuccess(data))
@@ -138,7 +145,7 @@ export const FollowUser = (payload) => (dispatch) => {
     method: "POST",
     url: "http://localhost:5000/profile/follow",
     headers: { "Content-Type": "application/json;charset=utf-8" },
-    data: payload
+    data: payload,
   })
     .then((res) => {
       const { data } = res;
@@ -155,7 +162,7 @@ export const unFollowUser = (payload) => (dispatch) => {
     method: "POST",
     url: "http://localhost:5000/profile/unfollow",
     headers: { "Content-Type": "application/json;charset=utf-8" },
-    data: payload
+    data: payload,
   })
     .then((res) => {
       const { data } = res;

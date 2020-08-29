@@ -1,5 +1,6 @@
 import React from "react";
-import { Card } from "antd";
+import { Card, Button } from "antd";
+import { UserDeleteOutlined, UserAddOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
@@ -18,6 +19,7 @@ const TweetCard = (props) => {
     followingCount,
     joined,
     dob,
+    isFollowing,
     profileImgUrl,
     posterImgUrl,
     currEmail,
@@ -43,8 +45,29 @@ const TweetCard = (props) => {
         />
       }
       actions={[
-        <p onClick={handleFollow}>Follow</p>,
-        <p onClick={handleUnFollow}>UnFollow</p>,
+        <div>
+          {isFollowing ? (
+            <Button
+              type="primary"
+              shape="round"
+              icon={<UserDeleteOutlined />}
+              size="large"
+              onClick={handleUnFollow}
+            >
+              UnFollow
+            </Button>
+          ) : (
+            <Button
+              type="primary"
+              shape="round"
+              icon={<UserAddOutlined />}
+              size="large"
+              onClick={handleFollow}
+            >
+              Follow
+            </Button>
+          )}
+        </div>,
       ]}
     >
       <Meta title={userTag} description={description} />

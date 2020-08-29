@@ -7,9 +7,6 @@ const AddTweet = (props) => {
     console.log(value);
     value.email = props.email;
     props.addNewTweet(value);
-    props.fetchAllTweets({
-      page: 1,
-    });
   };
   return (
     <>

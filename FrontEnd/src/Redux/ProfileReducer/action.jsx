@@ -113,10 +113,11 @@ export const getAllProfiles = () => (dispatch) => {
   dispatch(requestAllProfile());
   axios({
     method: "GET",
-    url: `http://localhost:5000/user/getAllUsers`,
+    url: `http://localhost:5000/user/getUsersToExplore`,
     headers: { "Content-Type": "application/json;charset=utf-8" },
   })
     .then((res) => {
+      console.log(res.data);
       const { data } = res;
       data.isUsersFetched
         ? dispatch(AllProfileSuccess(data.users))
