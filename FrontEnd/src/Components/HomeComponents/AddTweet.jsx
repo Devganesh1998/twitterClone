@@ -46,7 +46,7 @@ const AddTweet = (props) => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={props.addTweetSending}>
               Add Tweet
             </Button>
           </Form.Item>

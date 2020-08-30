@@ -1,9 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchAllTweets, addNewTweet, likeTweet } from "../Redux/TweetReducer/action";
+import {
+  fetchAllTweets,
+  addNewTweet,
+  likeTweet,
+} from "../Redux/TweetReducer/action";
 import AddTweet from "../Components/HomeComponents/AddTweet";
 import TweetCard from "../Components/HomeComponents/TweetCard";
 import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 class NewsFeed extends React.Component {
   constructor(props) {
@@ -29,24 +34,54 @@ class NewsFeed extends React.Component {
   };
 
   render() {
-    const { tweets, likeTweet, email, likeTweetSending } = this.props;
+    const {
+      tweets,
+      likeTweet,
+      email,
+      likeTweetSending,
+      addTweetSending,
+      isGetAllTweetsSending,
+    } = this.props;
     return (
       <React.Fragment>
         <div>
-          <AddTweet {...this.props} />
+          <AddTweet addTweetSending={addTweetSending} {...this.props} />
         </div>
         <div>
+          {tweets.length === 0 ? (
+            <div>
+              <p>
+                No more Tweets found, Please Follow people to view more Tweets
+              </p>
+              <Link to="/listAllUsers">Click Here, to find more people</Link>
+            </div>
+          ) : (
+            <p></p>
+          )}
           {tweets &&
             tweets.map((element) => {
-              return <TweetCard likeTweetSending={likeTweetSending} likeTweet={likeTweet} email={email} {...element} key={element.id}/>;
+              return (
+                <TweetCard
+                  likeTweetSending={likeTweetSending}
+                  likeTweet={likeTweet}
+                  email={email}
+                  {...element}
+                  key={element.id}
+                />
+              );
             })}
-          <Button
-            type="primary"
-            style={{ margin: "20px" }}
-            onClick={this.handleNextPage}
-          >
-            Load More
-          </Button>
+          {tweets.length > 0 ? (
+            <Button
+              type="primary"
+              style={{ margin: "20px" }}
+              onClick={this.handleNextPage}
+              loading={isGetAllTweetsSending}
+            >
+              Load More
+            </Button>
+          ) : (
+            <p></p>
+          )}
         </div>
       </React.Fragment>
     );
@@ -57,6 +92,8 @@ const mapStateToProps = (state) => {
   return {
     tweets: state.tweet.tweets,
     likeTweetSending: state.tweet.likeTweetSending,
+    addTweetSending: state.tweet.addTweetSending,
+    isGetAllTweetsSending: state.tweet.isGetAllTweetsSending,
     email: state.auth.email,
   };
 };
