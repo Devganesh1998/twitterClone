@@ -26,7 +26,6 @@ export default class SideMenu extends React.Component {
   };
 
   handleClick = (e) => {
-    console.log("click ", e);
     this.setState({
       current: e.key,
     });
@@ -73,10 +72,10 @@ export default class SideMenu extends React.Component {
           </SubMenu>
           <SubMenu key="sub4" icon={<SettingOutlined />} title="Auth">
             <Menu.Item key="5">
-              <Link to="/auth">Register</Link>
+              <Link to="/auth/register">Register</Link>
             </Menu.Item>
             <Menu.Item key="6">
-              <Link to="/auth">Login</Link>
+              <Link to="/auth/login">Login</Link>
             </Menu.Item>
             <Menu.Item key="7" onClick={this.handleLogout}>
               Logout

@@ -5,6 +5,8 @@ import { fetchUserTweets, getProfile } from "../Redux/ProfileReducer/action";
 import { SelflikeTweet } from "../Redux/ProfileReducer/action";
 import TweetCard from "../Components/HomeComponents/TweetCard";
 import UserCard from "../Components/HomeComponents/UserCards";
+import homeStyles from "../Styles/Home.module.css";
+
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +28,7 @@ class Profile extends React.Component {
       userTweetsLoading,
     } = this.props;
     return (
-      <div>
+      <div className={homeStyles.profileCont}>
         <h3 style={{ margin: "auto" }}>My Profile</h3>
         <div className={styles.profileCard}>
           {userProfile ? (
@@ -35,18 +37,20 @@ class Profile extends React.Component {
             ""
           )}
         </div>
-        {userTweets &&
-          userTweets.map((element, index) => {
-            return (
-              <TweetCard
-                likeTweetSending={userTweetsLoading[index]}
-                likeTweet={likeTweet}
-                email={email}
-                {...element}
-                key={index}
-              />
-            );
-          })}
+        <div className={homeStyles.userTweetsCont}>
+          {userTweets &&
+            userTweets.map((element, index) => {
+              return (
+                <TweetCard
+                  likeTweetSending={userTweetsLoading[index]}
+                  likeTweet={likeTweet}
+                  email={email}
+                  {...element}
+                  key={index}
+                />
+              );
+            })}
+        </div>
       </div>
     );
   }

@@ -91,7 +91,6 @@ const Reducer = (state = initialState, action) => {
         username: loginUsername,
         email: loginEmail,
       } = action.user.user;
-      console.log(action.user, action);
       return {
         ...state,
         isLoginSending: false,

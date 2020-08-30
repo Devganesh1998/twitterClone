@@ -3,6 +3,7 @@ import { getAllProfiles } from "../Redux/ProfileReducer/action";
 import { connect } from "react-redux";
 import UserCards from "../Components/HomeComponents/UserCards";
 import { FollowUser, unFollowUser } from "../Redux/ProfileReducer/action";
+import styles from "../Styles/Home.module.css"
 
 class ListAllUsers extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class ListAllUsers extends React.Component {
       unfollowUserLoading,
     } = this.props;
     return (
-      <div>
+      <div className={styles.listUsersCont}>
         {allProfiles &&
           allProfiles.map((Element, index) => (
             <UserCards

@@ -29,7 +29,7 @@ const Router = ({ isAuthenticated }) => {
           isAuthenticated={isAuthenticated}
           component={ListAllUsers}
         />
-        <Route path="/auth" component={AuthPage} />
+        <Route path="/auth/:type" component={AuthPage} />
         <Route render={() => <h3>404 Not Found</h3>} />
       </Switch>
     </React.Fragment>

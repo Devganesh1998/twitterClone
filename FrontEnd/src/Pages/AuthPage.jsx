@@ -10,18 +10,25 @@ import { Redirect } from "react-router";
 const { TabPane } = Tabs;
 
 function callback(key) {
-  console.log(key);
+  // console.log(key);
 }
 
 const AuthPage = ({ loginUser, registerUser, is_auth, ...rest }) => {
+  const currTab = rest.match.params.type;
+
   return is_auth ? (
     <Redirect to="/" {...rest} />
   ) : (
-    <Tabs defaultActiveKey="1" onChange={callback} {...rest}>
-      <TabPane tab="Login" key="1">
+    <Tabs
+      defaultActiveKey="login"
+      onChange={callback}
+      activeKey={currTab}
+      {...rest}
+    >
+      <TabPane tab="Login" key="login">
         <LoginForm loginUser={loginUser} />
       </TabPane>
-      <TabPane tab="Register" key="2">
+      <TabPane tab="Register" key="register">
         <RegisterForm registerUser={registerUser} />
       </TabPane>
     </Tabs>
@@ -29,7 +36,7 @@ const AuthPage = ({ loginUser, registerUser, is_auth, ...rest }) => {
 };
 
 const mapStateToProps = (state) => ({
-  is_auth: state.auth.isAuthenticated
+  is_auth: state.auth.isAuthenticated,
 });
 const mapDispatchToProps = (dispatch) => ({
   loginUser: (datas) => dispatch(loginUser(datas)),

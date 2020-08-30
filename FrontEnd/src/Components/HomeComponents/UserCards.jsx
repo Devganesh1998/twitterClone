@@ -19,14 +19,12 @@ export default class TweetCard extends React.PureComponent {
   handleFollow = () => {
     const { FollowUser, currEmail, id } = this.props;
     const payload = { email: currEmail, parentId: id };
-    console.log(payload);
     FollowUser(payload);
   };
 
   handleUnFollow = () => {
     const { currEmail, id, unFollowUser } = this.props;
     const payload = { email: currEmail, parentId: id };
-    console.log(payload);
     unFollowUser(payload);
   };
 

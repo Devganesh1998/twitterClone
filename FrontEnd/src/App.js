@@ -13,7 +13,7 @@ function App({logout}) {
         <div className={styles.sideMenuCont}>
           <SideMenu logout={logout}></SideMenu>
         </div>
-        <div>
+        <div className={styles.routerCont}>
           <Router />
         </div>
       </div>

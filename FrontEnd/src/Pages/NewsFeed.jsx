@@ -9,6 +9,7 @@ import AddTweet from "../Components/HomeComponents/AddTweet";
 import TweetCard from "../Components/HomeComponents/TweetCard";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
+import styles from "../Styles/Home.module.css";
 
 class NewsFeed extends React.Component {
   constructor(props) {
@@ -27,7 +28,6 @@ class NewsFeed extends React.Component {
   }
 
   handleNextPage = () => {
-    console.log("this.state.page", this.state.page);
     const { email, fetchAllTweets } = this.props;
     fetchAllTweets({ page: this.state.page + 1, email: email });
     this.setState({ page: this.state.page + 1 });
@@ -43,11 +43,11 @@ class NewsFeed extends React.Component {
       isGetAllTweetsSending,
     } = this.props;
     return (
-      <React.Fragment>
-        <div>
+      <div className={styles.newsFeedCont}>
+        <div className={styles.addTweetCont}>
           <AddTweet addTweetSending={addTweetSending} {...this.props} />
         </div>
-        <div>
+        <div className={styles.tweetsParentCont}>
           {tweets.length === 0 ? (
             <div>
               <p>
@@ -58,18 +58,20 @@ class NewsFeed extends React.Component {
           ) : (
             <p></p>
           )}
-          {tweets &&
-            tweets.map((element, index) => {
-              return (
-                <TweetCard
-                  likeTweetSending={likeTweetLoading[index]}
-                  likeTweet={likeTweet}
-                  email={email}
-                  {...element}
-                  key={element.id}
-                />
-              );
-            })}
+          <div className={styles.newsFeedTweetsCont}>
+            {tweets &&
+              tweets.map((element, index) => {
+                return (
+                  <TweetCard
+                    likeTweetSending={likeTweetLoading[index]}
+                    likeTweet={likeTweet}
+                    email={email}
+                    {...element}
+                    key={element.id}
+                  />
+                );
+              })}
+          </div>
           {tweets.length > 0 ? (
             <Button
               type="primary"
@@ -83,7 +85,7 @@ class NewsFeed extends React.Component {
             <p></p>
           )}
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

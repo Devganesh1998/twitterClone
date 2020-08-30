@@ -214,7 +214,6 @@ const Reducer = (state = initialState, action) => {
         (ele) => ele.id === action.payload
       );
       state.userTweetsLoading[likeTweetIndex] = true;
-      console.log("req", state.userTweetsLoading);
       return {
         ...state,
         userTweetsLoading: [...state.userTweetsLoading],
@@ -230,7 +229,6 @@ const Reducer = (state = initialState, action) => {
       );
       state.userTweets[tweetIndex].likes = likes;
       state.userTweetsLoading[tweetIndex] = false;
-      console.log("req", state.userTweetsLoading);
       return {
         ...state,
         userTweetsLoading: [...state.userTweetsLoading],

@@ -1,23 +1,22 @@
 import React from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button } from "antd";
 export const layout = {
   labelCol: {
     span: 8,
   },
   wrapperCol: {
-    span: 16,
+    span: 10,
   },
 };
 export const tailLayout = {
   wrapperCol: {
     offset: 8,
-    span: 16,
+    span: 10,
   },
 };
 
 const LoginForm = (props) => {
   const {loginUser} = props;
-  console.log(loginUser);
   const onFinish = (values) => {
     console.log("Success:", values);
     loginUser(values);
@@ -63,9 +62,9 @@ const LoginForm = (props) => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+      {/* <Form.Item {...tailLayout} name="remember" valuePropName="checked">
         <Checkbox>Remember me</Checkbox>
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">

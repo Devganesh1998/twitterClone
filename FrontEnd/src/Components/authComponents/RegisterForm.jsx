@@ -19,7 +19,6 @@ import { layout, tailLayout } from "./LoginForm";
 // };
 
 const RegisterForm = (props) => {
-  console.log(props);
   const {registerUser} = props;
   const submit = (value) => {
     console.log(value);

@@ -34,7 +34,12 @@ const rootreducer = combineReducers({
   profile: profileReducer,
 });
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+let composeEnhancers = compose;
+
+if (process.env.NODE_ENV !== "production") {
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+}
 
 export default function configureStore() {
   const store = createStore(
@@ -44,7 +49,6 @@ export default function configureStore() {
   );
   store.dispatch(verifyAuth());
   store.subscribe(() => saveToLocalStorage(store.getState()));
-  console.log(store.getState());
 
   return store;
 }
