@@ -2,20 +2,13 @@ import {
   GET_ALL_TWEETS_REQUEST,
   GET_ALL_TWEETS_SUCCESS,
   GET_ALL_TWEETS_FAILURE,
-  FOLLOW_USER_REQUEST,
-  FOLLOW_USER_SUCCESS,
-  FOLLOW_USER_FAILURE,
   ADD_NEW_TWEET_REQUEST,
   ADD_NEW_TWEET_SUCCESS,
   ADD_NEW_TWEET_FAILURE,
-  UN_FOLLOW_USER_REQUEST,
-  UN_FOLLOW_USER_SUCCESS,
-  UN_FOLLOW_USER_FAILURE,
   LIKE_TWEET_REQUEST,
   LIKE_TWEET_SUCCESS,
   LIKE_TWEET_FAILURE,
 } from "./actionType";
-import { getAllProfiles } from "../ProfileReducer/action";
 
 import axios from "../axoisInstance";
 
@@ -59,53 +52,16 @@ const addNewTweetFailure = (error) => {
   };
 };
 
-const requestFollow = () => {
-  return {
-    type: FOLLOW_USER_REQUEST,
-  };
-};
-
-const FollowSuccess = () => {
-  return {
-    type: FOLLOW_USER_SUCCESS,
-  };
-};
-
-const FollowFailure = (error) => {
-  return {
-    type: FOLLOW_USER_FAILURE,
-    error,
-  };
-};
-
-const requestunFollow = () => {
-  return {
-    type: UN_FOLLOW_USER_REQUEST,
-  };
-};
-
-const unFollowSuccess = () => {
-  return {
-    type: UN_FOLLOW_USER_SUCCESS,
-  };
-};
-
-const unFollowFailure = (error) => {
-  return {
-    type: UN_FOLLOW_USER_FAILURE,
-    error,
-  };
-};
-
 const requestLikeTweet = () => {
   return {
     type: LIKE_TWEET_REQUEST,
   };
 };
 
-const LikeTweetSuccess = () => {
+const LikeTweetSuccess = (payload) => {
   return {
     type: LIKE_TWEET_SUCCESS,
+    payload,
   };
 };
 
@@ -161,42 +117,6 @@ export const addNewTweet = (payload) => (dispatch) => {
     .catch((err) => dispatch(addNewTweetFailure(err)));
 };
 
-export const FollowUser = (payload) => (dispatch) => {
-  dispatch(requestFollow());
-  axios({
-    method: "POST",
-    url: "http://localhost:5000/profile/follow",
-    headers: { "Content-Type": "application/json;charset=utf-8" },
-    data: payload,
-  })
-    .then((res) => {
-      const { data } = res;
-      dispatch(getAllProfiles());
-      data.isProfileFollowed
-        ? dispatch(FollowSuccess())
-        : dispatch(FollowFailure(res.errormsg));
-    })
-    .catch((err) => dispatch(FollowFailure(err)));
-};
-
-export const unFollowUser = (payload) => (dispatch) => {
-  dispatch(requestunFollow());
-  axios({
-    method: "POST",
-    url: "http://localhost:5000/profile/unfollow",
-    headers: { "Content-Type": "application/json;charset=utf-8" },
-    data: payload,
-  })
-    .then((res) => {
-      dispatch(getAllProfiles());
-      const { data } = res;
-      data.isProfileUnfollowed
-        ? dispatch(unFollowSuccess())
-        : dispatch(unFollowFailure(res.errormsg));
-    })
-    .catch((err) => dispatch(unFollowFailure(err)));
-};
-
 export const likeTweet = (payload) => (dispatch) => {
   dispatch(requestLikeTweet());
   axios({
@@ -206,16 +126,20 @@ export const likeTweet = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
-      dispatch(
-        fetchAllTweets({
-          page: 1,
-          email: payload.likedUserMail,
-        })
-      );
+      console.log(res.data);
+      // dispatch(
+      //   fetchAllTweets({
+      //     page: 1,
+      //     email: payload.likedUserMail,
+      //   })
+      // );
       const { data } = res;
       data.isTweetLiked
-        ? dispatch(LikeTweetSuccess())
+        ? dispatch(LikeTweetSuccess({ likes: data.likes, id: data.id }))
         : dispatch(LikeTweetFailure(res.errormsg));
     })
-    .catch((err) => dispatch(LikeTweetFailure(err)));
+    .catch((err) => {
+      console.log(err);
+      dispatch(LikeTweetFailure(err));
+    });
 };

@@ -7,7 +7,13 @@ import {
   GET_USER_TWEETS_FAILURE,
   GET_ALL_PROFILES_REQUEST,
   GET_ALL_PROFILES_SUCCESS,
-  GET_ALL_PROFILES_FAILURE
+  GET_ALL_PROFILES_FAILURE,
+  FOLLOW_USER_REQUEST,
+  FOLLOW_USER_SUCCESS,
+  FOLLOW_USER_FAILURE,
+  UN_FOLLOW_USER_REQUEST,
+  UN_FOLLOW_USER_SUCCESS,
+  UN_FOLLOW_USER_FAILURE,
 } from "./actionType";
 
 import axios from "../axoisInstance";
@@ -72,6 +78,44 @@ const AllProfileFailure = (error) => {
   };
 };
 
+const requestFollow = () => {
+  return {
+    type: FOLLOW_USER_REQUEST,
+  };
+};
+
+const FollowSuccess = (payload) => {
+  return {
+    type: FOLLOW_USER_SUCCESS,
+    payload,
+  };
+};
+
+const FollowFailure = (error) => {
+  return {
+    type: FOLLOW_USER_FAILURE,
+    error,
+  };
+};
+
+const requestunFollow = () => {
+  return {
+    type: UN_FOLLOW_USER_REQUEST,
+  };
+};
+
+const unFollowSuccess = () => {
+  return {
+    type: UN_FOLLOW_USER_SUCCESS,
+  };
+};
+
+const unFollowFailure = (error) => {
+  return {
+    type: UN_FOLLOW_USER_FAILURE,
+    error,
+  };
+};
 export const fetchUserTweets = (payload) => (dispatch) => {
   dispatch(requestUserTweets());
   axios({
@@ -124,4 +168,48 @@ export const getAllProfiles = () => (dispatch) => {
         : dispatch(AllProfileFailure(res.errormsg));
     })
     .catch((err) => dispatch(AllProfileFailure(err)));
+};
+
+export const FollowUser = (payload) => (dispatch) => {
+  dispatch(requestFollow());
+  axios({
+    method: "POST",
+    url: "http://localhost:5000/profile/follow",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
+    data: payload,
+  })
+    .then((res) => {
+      console.log(res.data);
+      const { data } = res;
+      // dispatch(getAllProfiles());
+      data.isProfileFollowed
+        ? dispatch(FollowSuccess(data.updatedProfile))
+        : dispatch(FollowFailure(res.errormsg));
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(FollowFailure(err));
+    });
+};
+
+export const unFollowUser = (payload) => (dispatch) => {
+  dispatch(requestunFollow());
+  axios({
+    method: "POST",
+    url: "http://localhost:5000/profile/unfollow",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
+    data: payload,
+  })
+    .then((res) => {
+      console.log(res.data);
+      dispatch(getAllProfiles());
+      const { data } = res;
+      data.isProfileUnfollowed
+        ? dispatch(unFollowSuccess())
+        : dispatch(unFollowFailure(res.errormsg));
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(unFollowFailure(err));
+    });
 };

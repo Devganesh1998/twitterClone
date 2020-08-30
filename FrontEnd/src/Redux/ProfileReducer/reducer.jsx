@@ -6,8 +6,14 @@ import {
   GET_USER_TWEETS_SUCCESS,
   GET_USER_TWEETS_FAILURE,
   GET_ALL_PROFILES_REQUEST,
-  GET_ALL_PROFILES_SUCCESS, 
-  GET_ALL_PROFILES_FAILURE
+  GET_ALL_PROFILES_SUCCESS,
+  GET_ALL_PROFILES_FAILURE,
+  FOLLOW_USER_REQUEST,
+  FOLLOW_USER_SUCCESS,
+  FOLLOW_USER_FAILURE,
+  UN_FOLLOW_USER_REQUEST,
+  UN_FOLLOW_USER_SUCCESS,
+  UN_FOLLOW_USER_FAILURE,
 } from "./actionType";
 
 const initialState = {
@@ -25,11 +31,20 @@ const initialState = {
   isallProfError: false,
   allProfileErrorMessage: "",
 
-
   isUserTweetSending: false,
   isUserTweetSent: false,
   isUserTweetError: false,
   UserTweetErrorMessage: "",
+
+  followUserSending: false,
+  followUserSent: false,
+  followUserError: false,
+  followErrorMessage: "",
+
+  unfollowUserSending: false,
+  unfollowUserSent: false,
+  unfollowUserError: false,
+  unfollowErrorMessage: "",
 };
 
 const Reducer = (state = initialState, action) => {
@@ -37,7 +52,7 @@ const Reducer = (state = initialState, action) => {
     case GET_PROFILE_REQUEST:
       return {
         ...state,
-        userProfile:{},
+        userProfile: {},
         isGetProfSending: true,
         isGetProfSent: false,
         isGetProfError: false,
@@ -101,6 +116,52 @@ const Reducer = (state = initialState, action) => {
         ...state,
         isallProfError: true,
         allProfileErrorMessage: action.error,
+      };
+    case FOLLOW_USER_REQUEST:
+      return {
+        ...state,
+        followUserSending: true,
+        followUserSent: false,
+        followUserError: false,
+        followErrorMessage: "",
+        isFollowSuccess: false,
+      };
+    case FOLLOW_USER_SUCCESS:
+      return {
+        ...state,
+        followUserSending: false,
+        followUserSent: true,
+        isFollowSuccess: true,
+      };
+    case FOLLOW_USER_FAILURE:
+      return {
+        ...state,
+        followUserSending: false,
+        followUserError: true,
+        followErrorMessage: action.error,
+      };
+    case UN_FOLLOW_USER_REQUEST:
+      return {
+        ...state,
+        unfollowUserSending: true,
+        unfollowUserSent: false,
+        unfollowUserError: false,
+        unfollowErrorMessage: "",
+        isUnFollowSuccess: false,
+      };
+    case UN_FOLLOW_USER_SUCCESS:
+      return {
+        ...state,
+        unfollowUserSending: false,
+        unfollowUserSent: true,
+        isUnFollowSuccess: true,
+      };
+    case UN_FOLLOW_USER_FAILURE:
+      return {
+        ...state,
+        unfollowUserSending: true,
+        unfollowUserError: true,
+        unfollowErrorMessage: action.error,
       };
     default:
       return state;

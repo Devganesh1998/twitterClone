@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Button } from "antd";
 import { LikeOutlined } from "@ant-design/icons";
-import styles from "../../Styles/Home.module.css";
 const { Meta } = Card;
 
 export default class TweetCard extends React.PureComponent {
@@ -30,11 +29,9 @@ export default class TweetCard extends React.PureComponent {
       description,
       likes,
       createdAt,
-      email,
       userTag,
       followingCount,
       followersCount,
-      id,
     } = this.props;
     const { src } = this.state;
     return (

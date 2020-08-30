@@ -2,7 +2,7 @@ import React from "react";
 import { getAllProfiles } from "../Redux/ProfileReducer/action";
 import { connect } from "react-redux";
 import UserCards from "../Components/HomeComponents/UserCards";
-import { FollowUser, unFollowUser } from "../Redux/TweetReducer/action";
+import { FollowUser, unFollowUser } from "../Redux/ProfileReducer/action";
 
 class ListAllUsers extends React.Component {
   constructor(props) {

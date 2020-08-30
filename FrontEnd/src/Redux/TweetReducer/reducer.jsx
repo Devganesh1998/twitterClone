@@ -2,18 +2,12 @@ import {
   GET_ALL_TWEETS_REQUEST,
   GET_ALL_TWEETS_SUCCESS,
   GET_ALL_TWEETS_FAILURE,
-  FOLLOW_USER_REQUEST,
-  FOLLOW_USER_SUCCESS,
-  FOLLOW_USER_FAILURE,
   ADD_NEW_TWEET_REQUEST,
   ADD_NEW_TWEET_SUCCESS,
   ADD_NEW_TWEET_FAILURE,
-  UN_FOLLOW_USER_REQUEST,
-  UN_FOLLOW_USER_SUCCESS,
-  UN_FOLLOW_USER_FAILURE,
   LIKE_TWEET_REQUEST,
   LIKE_TWEET_SUCCESS,
-  LIKE_TWEET_FAILURE
+  LIKE_TWEET_FAILURE,
 } from "./actionType";
 
 const initialState = {
@@ -23,16 +17,6 @@ const initialState = {
   isGetAllTweetsSent: false,
   isGetAllTweetsError: false,
   getTweetErrorMessage: "",
-
-  followUserSending: false,
-  followUserSent: false,
-  followUserError: false,
-  followErrorMessage: "",
-
-  unfollowUserSending: false,
-  unfollowUserSent: false,
-  unfollowUserError: false,
-  unfollowErrorMessage: "",
 
   addTweetSending: false,
   addTweetSent: false,
@@ -62,10 +46,7 @@ const Reducer = (state = initialState, action) => {
     case GET_ALL_TWEETS_SUCCESS:
       return {
         ...state,
-        tweets: [
-          ...state.tweets,
-          ...action.tweets
-        ],
+        tweets: [...state.tweets, ...action.tweets],
         isGetAllTweetsSending: false,
         isGetAllTweetsSent: true,
       };
@@ -75,52 +56,6 @@ const Reducer = (state = initialState, action) => {
         isGetAllTweetsSending: false,
         isGetAllTweetsError: true,
         getTweetErrorMessage: action.error,
-      };
-    case FOLLOW_USER_REQUEST:
-      return {
-        ...state,
-        followUserSending: true,
-        followUserSent: false,
-        followUserError: false,
-        followErrorMessage: "",
-        isFollowSuccess: false,
-      };
-    case FOLLOW_USER_SUCCESS:
-      return {
-        ...state,
-        followUserSending: false,
-        followUserSent: true,
-        isFollowSuccess: true,
-      };
-    case FOLLOW_USER_FAILURE:
-      return {
-        ...state,
-        followUserSending: false,
-        followUserError: true,
-        followErrorMessage: action.error,
-      };
-    case UN_FOLLOW_USER_REQUEST:
-      return {
-        ...state,
-        unfollowUserSending: true,
-        unfollowUserSent: false,
-        unfollowUserError: false,
-        unfollowErrorMessage: "",
-        isUnFollowSuccess: false,
-      };
-    case UN_FOLLOW_USER_SUCCESS:
-      return {
-        ...state,
-        unfollowUserSending: false,
-        unfollowUserSent: true,
-        isUnFollowSuccess: true,
-      };
-    case UN_FOLLOW_USER_FAILURE:
-      return {
-        ...state,
-        unfollowUserSending: true,
-        unfollowUserError: true,
-        unfollowErrorMessage: action.error,
       };
     case ADD_NEW_TWEET_REQUEST:
       return {
@@ -155,8 +90,14 @@ const Reducer = (state = initialState, action) => {
         likeTweetErrorMessage: "",
       };
     case LIKE_TWEET_SUCCESS:
+      const { id, likes } = action.payload;
+      const tweetIndex = state.tweets.findIndex((element) => element.id === id);
+      state.tweets[tweetIndex].likes = likes;
       return {
         ...state,
+        tweets: [
+          ...state.tweets,      
+        ],
         likeTweetSending: false,
         likeTweetSent: true,
       };

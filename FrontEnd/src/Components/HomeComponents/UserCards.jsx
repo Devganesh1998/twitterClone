@@ -31,7 +31,6 @@ export default class TweetCard extends React.PureComponent {
   };
 
   render() {
-    console.log("this.props", this.props);
     let {
       name,
       location,
