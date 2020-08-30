@@ -4,88 +4,124 @@ import { UserDeleteOutlined, UserAddOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
-const TweetCard = (props) => {
-  const {
-    id,
-    name,
-    location,
-    userTag,
-    age,
-    description,
-    email,
-    mobile,
-    tweetCount,
-    followersCount,
-    followingCount,
-    joined,
-    dob,
-    isFollowing,
-    profileImgUrl,
-    posterImgUrl,
-    currEmail,
-  } = props;
+export default class TweetCard extends React.PureComponent {
+  state = {
+    src: this.props.profileImgUrl,
+  };
 
-  const handleFollow = () => {
+  handleInvalidImg = () => {
+    this.setState({
+      src:
+        "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png",
+    });
+  };
+
+  handleFollow = () => {
+    const { FollowUser, currEmail, id } = this.props;
     const payload = { email: currEmail, parentId: id };
     console.log(payload);
-    props.FollowUser(payload);
+    FollowUser(payload);
   };
-  const handleUnFollow = () => {
+
+  handleUnFollow = () => {
+    const { currEmail, id, unFollowUser } = this.props;
     const payload = { email: currEmail, parentId: id };
     console.log(payload);
-    props.unFollowUser(payload);
+    unFollowUser(payload);
   };
-  return (
-    <Card
-      hoverable
-      cover={
-        <img
-          alt="example"
-          style={{margin: "auto", marginTop: "10px",height: "200px", width: "200px"}}
-          src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
-        />
-      }
-      actions={[
-        <div>
-          {isFollowing ? (
-            <Button
-              type="primary"
-              shape="round"
-              icon={<UserDeleteOutlined />}
-              size="large"
-              onClick={handleUnFollow}
-            >
-              UnFollow
-            </Button>
-          ) : (
-            <Button
-              type="primary"
-              shape="round"
-              icon={<UserAddOutlined />}
-              size="large"
-              onClick={handleFollow}
-            >
-              Follow
-            </Button>
-          )}
-        </div>,
-      ]}
-    >
-      <Meta title={userTag} description={description} />
-      <p>name : {name}</p>
-      <p>Location : {location}</p>
-      <p>age : {age}</p>
-      <p>email : {email}</p>
-      <p>mobile : {mobile}</p>
-      <p>tweetCount : {tweetCount}</p>
-      <p>followersCount : {followersCount}</p>
-      <p>followingCount : {followingCount}</p>
-      <p>Joined : {joined}</p>
-      <p>Date of Birth : {dob}</p>
-      <p>Profile Img url : {profileImgUrl}</p>
-      <p>Poster Img url : {posterImgUrl}</p>
-    </Card>
-  );
-};
 
-export default TweetCard;
+  render() {
+    console.log("this.props", this.props);
+    let {
+      name,
+      location,
+      userTag,
+      age,
+      description,
+      email,
+      mobile,
+      tweetCount,
+      followersCount,
+      followingCount,
+      joined,
+      dob,
+      isFollowing,
+      posterImgUrl,
+      isFollowActionAvail = true,
+    } = this.props;
+    const { src } = this.state;
+
+    return (
+      <Card
+        style={{ width: "400px" }}
+        hoverable
+        cover={
+          <div
+            style={{
+              display: "flex",
+              padding: "10px",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              backgroundImage: `url(${posterImgUrl})`,
+              backgroundSize: "auto",
+              backgroundRepeat: "no-repeat",
+              backgroundBlendMode: "darken",
+              backgroundPosition: "50%",
+            }}
+          >
+            <img
+              alt="ProgileImg"
+              src={src}
+              style={{ width: "200px", height: "200px", borderRadius: "10px" }}
+              onError={this.handleInvalidImg}
+            />
+          </div>
+        }
+        actions={[
+          <div>
+            {isFollowActionAvail && isFollowActionAvail ? (
+              <div>
+                {" "}
+                {isFollowing ? (
+                  <Button
+                    type="primary"
+                    shape="round"
+                    icon={<UserDeleteOutlined />}
+                    size="large"
+                    onClick={this.handleUnFollow}
+                  >
+                    UnFollow
+                  </Button>
+                ) : (
+                  <Button
+                    type="primary"
+                    shape="round"
+                    icon={<UserAddOutlined />}
+                    size="large"
+                    onClick={this.handleFollow}
+                  >
+                    Follow
+                  </Button>
+                )}{" "}
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </div>,
+        ]}
+      >
+        <Meta title={userTag} description={<h4>About me : {description}</h4>} />
+        <p>Name : {name}</p>
+        <p>Location : {location}</p>
+        <p>Age : {age}</p>
+        <p>email : {email}</p>
+        <p>Mobile : {mobile}</p>
+        <p>TweetCount : {tweetCount}</p>
+        <p>FollowersCount : {followersCount}</p>
+        <p>FollowingCount : {followingCount}</p>
+        <p>Joined : {joined}</p>
+        <p>Date of Birth : {dob}</p>
+      </Card>
+    );
+  }
+}

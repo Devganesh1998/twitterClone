@@ -22,7 +22,7 @@ class Profile extends React.Component {
       <div>
         <h3 style={{ margin: "auto" }}>My Profile</h3>
         <div className={styles.profileCard}>
-          {userProfile ? <UserCard {...userProfile} /> : ""}
+          {userProfile ? <UserCard isFollowActionAvail={false} {...userProfile} /> : ""}
         </div>
         {userTweets &&
           userTweets.map((element, index) => {
