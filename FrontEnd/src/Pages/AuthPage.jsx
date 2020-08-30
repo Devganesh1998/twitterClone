@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs } from "antd";
 import LoginForm from "../Components/authComponents/LoginForm";
 import RegisterForm from "../Components/authComponents/RegisterForm";
@@ -9,12 +9,16 @@ import { Redirect } from "react-router";
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-  // console.log(key);
-}
-
 const AuthPage = ({ loginUser, registerUser, is_auth, ...rest }) => {
-  const currTab = rest.match.params.type;
+  const [currTab, setCurrTab] = useState(rest.match.params.type);
+  const callback = (key) => {
+    setCurrTab(key);
+    console.log(key, currTab, rest.match.params);
+  };
+
+  useEffect(() => {
+    setCurrTab(rest.match.params.type);
+  }, [rest.match.params.type]);
 
   return is_auth ? (
     <Redirect to="/" {...rest} />
