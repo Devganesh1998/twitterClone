@@ -45,11 +45,13 @@ const initialState = {
   isUserTweetError: false,
   UserTweetErrorMessage: "",
 
+  followUserLoading: [],
   followUserSending: false,
   followUserSent: false,
   followUserError: false,
   followErrorMessage: "",
 
+  unfollowUserLoading: [],
   unfollowUserSending: false,
   unfollowUserSent: false,
   unfollowUserError: false,
@@ -111,15 +113,23 @@ const Reducer = (state = initialState, action) => {
       return {
         ...state,
         allProfiles: [],
+        followUserLoading: [],
+        unfollowUserLoading: [],
         isallProfSending: true,
         isallProfSent: false,
         isallProfError: false,
         allProfileErrorMessage: "",
       };
     case GET_ALL_PROFILES_SUCCESS:
+      action.users.forEach((ele) => {
+        state.followUserLoading.push(false);
+        state.unfollowUserLoading.push(false);
+      });
       return {
         ...state,
         allProfiles: action.users,
+        followUserLoading: [...state.followUserLoading],
+        unfollowUserLoading: [...state.unfollowUserLoading],
         isallProfSending: false,
         isallProfSent: true,
       };
@@ -130,8 +140,13 @@ const Reducer = (state = initialState, action) => {
         allProfileErrorMessage: action.error,
       };
     case FOLLOW_USER_REQUEST:
+      const followIndex = state.allProfiles.findIndex(
+        (ele) => ele.id === action.payload
+      );
+      state.followUserLoading[followIndex] = true;
       return {
         ...state,
+        followUserLoading: [...state.followUserLoading],
         followUserSending: true,
         followUserSent: false,
         followUserError: false,
@@ -143,9 +158,11 @@ const Reducer = (state = initialState, action) => {
         (element) => element.id === action.payload.id
       );
       state.allProfiles[profileIndex] = action.payload;
+      state.followUserLoading[profileIndex] = false;
       return {
         ...state,
         allProfiles: [...state.allProfiles],
+        followUserLoading: [...state.followUserLoading],
         followUserSending: false,
         followUserSent: true,
         isFollowSuccess: true,
@@ -158,8 +175,13 @@ const Reducer = (state = initialState, action) => {
         followErrorMessage: action.error,
       };
     case UN_FOLLOW_USER_REQUEST:
+      const unfollowIndex = state.allProfiles.findIndex(
+        (ele) => ele.id === action.payload
+      );
+      state.unfollowUserLoading[unfollowIndex] = true;
       return {
         ...state,
+        unfollowUserLoading: [...state.unfollowUserLoading],
         unfollowUserSending: true,
         unfollowUserSent: false,
         unfollowUserError: false,
@@ -171,8 +193,10 @@ const Reducer = (state = initialState, action) => {
         (element) => element.id === action.payload.id
       );
       state.allProfiles[profileIndex2] = action.payload;
+      state.unfollowUserLoading[profileIndex2] = false;
       return {
         ...state,
+        unfollowUserLoading: [...state.unfollowUserLoading],
         allProfiles: [...state.allProfiles],
         unfollowUserSending: false,
         unfollowUserSent: true,
@@ -201,7 +225,9 @@ const Reducer = (state = initialState, action) => {
       };
     case SELF_LIKE_TWEET_SUCCESS:
       const { id, likes } = action.payload;
-      const tweetIndex = state.userTweets.findIndex((element) => element.id === id);
+      const tweetIndex = state.userTweets.findIndex(
+        (element) => element.id === id
+      );
       state.userTweets[tweetIndex].likes = likes;
       state.userTweetsLoading[tweetIndex] = false;
       console.log("req", state.userTweetsLoading);

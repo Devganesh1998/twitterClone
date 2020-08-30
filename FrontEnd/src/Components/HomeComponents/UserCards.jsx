@@ -91,6 +91,7 @@ export default class TweetCard extends React.PureComponent {
                     size="large"
                     loading={unfollowUserSending} 
                     onClick={this.handleUnFollow}
+                    disabled={unfollowUserSending}
                   >
                     UnFollow
                   </Button>
@@ -101,6 +102,7 @@ export default class TweetCard extends React.PureComponent {
                     icon={<UserAddOutlined />}
                     loading={followUserSending} 
                     size="large"
+                    disabled={followUserSending}
                     onClick={this.handleFollow}
                   >
                     Follow

@@ -127,13 +127,11 @@ export const likeTweet = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
-      setTimeout(() => {
-        console.log(res);
-        const { data } = res;
-        data.isTweetLiked
-          ? dispatch(LikeTweetSuccess({ likes: data.likes, id: data.id }))
-          : dispatch(LikeTweetFailure(res.errormsg));
-      }, 1000);
+      console.log(res);
+      const { data } = res;
+      data.isTweetLiked
+        ? dispatch(LikeTweetSuccess({ likes: data.likes, id: data.id }))
+        : dispatch(LikeTweetFailure(res.errormsg));
     })
     .catch((err) => {
       console.log(err);

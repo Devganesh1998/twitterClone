@@ -16,7 +16,7 @@ import {
   UN_FOLLOW_USER_FAILURE,
   SELF_LIKE_TWEET_REQUEST,
   SELF_LIKE_TWEET_SUCCESS,
-  SELF_LIKE_TWEET_FAILURE
+  SELF_LIKE_TWEET_FAILURE,
 } from "./actionType";
 
 import axios from "../axoisInstance";
@@ -81,9 +81,10 @@ const AllProfileFailure = (error) => {
   };
 };
 
-const requestFollow = () => {
+const requestFollow = (payload) => {
   return {
     type: FOLLOW_USER_REQUEST,
+    payload,
   };
 };
 
@@ -101,16 +102,17 @@ const FollowFailure = (error) => {
   };
 };
 
-const requestunFollow = () => {
+const requestunFollow = (payload) => {
   return {
     type: UN_FOLLOW_USER_REQUEST,
+    payload,
   };
 };
 
 const unFollowSuccess = (payload) => {
   return {
     type: UN_FOLLOW_USER_SUCCESS,
-    payload
+    payload,
   };
 };
 
@@ -198,7 +200,7 @@ export const getAllProfiles = () => (dispatch) => {
 };
 
 export const FollowUser = (payload) => (dispatch) => {
-  dispatch(requestFollow());
+  dispatch(requestFollow(payload.parentId));
   axios({
     method: "POST",
     url: "http://localhost:5000/profile/follow",
@@ -218,7 +220,7 @@ export const FollowUser = (payload) => (dispatch) => {
 };
 
 export const unFollowUser = (payload) => (dispatch) => {
-  dispatch(requestunFollow());
+  dispatch(requestunFollow(payload.parentId));
   axios({
     method: "POST",
     url: "http://localhost:5000/profile/unfollow",
@@ -237,7 +239,6 @@ export const unFollowUser = (payload) => (dispatch) => {
     });
 };
 
-
 export const SelflikeTweet = (payload) => (dispatch) => {
   dispatch(requestLikeTweet(payload.tweetId));
   axios({
@@ -247,13 +248,11 @@ export const SelflikeTweet = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
-      setTimeout(() => {
-        console.log(res);
-        const { data } = res;
-        data.isTweetLiked
-          ? dispatch(LikeTweetSuccess({ likes: data.likes, id: data.id }))
-          : dispatch(LikeTweetFailure(res.errormsg));
-      }, 1000);
+      console.log(res);
+      const { data } = res;
+      data.isTweetLiked
+        ? dispatch(LikeTweetSuccess({ likes: data.likes, id: data.id }))
+        : dispatch(LikeTweetFailure(res.errormsg));
     })
     .catch((err) => {
       console.log(err);
