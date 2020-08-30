@@ -14,6 +14,9 @@ import {
   UN_FOLLOW_USER_REQUEST,
   UN_FOLLOW_USER_SUCCESS,
   UN_FOLLOW_USER_FAILURE,
+  SELF_LIKE_TWEET_REQUEST,
+  SELF_LIKE_TWEET_SUCCESS,
+  SELF_LIKE_TWEET_FAILURE
 } from "./actionType";
 
 import axios from "../axoisInstance";
@@ -117,6 +120,28 @@ const unFollowFailure = (error) => {
     error,
   };
 };
+
+const requestLikeTweet = (payload) => {
+  return {
+    type: SELF_LIKE_TWEET_REQUEST,
+    payload,
+  };
+};
+
+const LikeTweetSuccess = (payload) => {
+  return {
+    type: SELF_LIKE_TWEET_SUCCESS,
+    payload,
+  };
+};
+
+const LikeTweetFailure = (error) => {
+  return {
+    type: SELF_LIKE_TWEET_FAILURE,
+    error,
+  };
+};
+
 export const fetchUserTweets = (payload) => (dispatch) => {
   dispatch(requestUserTweets());
   axios({
@@ -125,6 +150,7 @@ export const fetchUserTweets = (payload) => (dispatch) => {
     headers: { "Content-Type": "application/json;charset=utf-8" },
   })
     .then((res) => {
+      console.log(res);
       const { data } = res;
       if (data.isTweetFetched) {
         dispatch(getUserTweetsSuccess(data.tweets));
@@ -208,5 +234,29 @@ export const unFollowUser = (payload) => (dispatch) => {
     .catch((err) => {
       console.log(err);
       dispatch(unFollowFailure(err));
+    });
+};
+
+
+export const SelflikeTweet = (payload) => (dispatch) => {
+  dispatch(requestLikeTweet(payload.tweetId));
+  axios({
+    method: "POST",
+    url: "http://localhost:5000/tweet/like",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
+    data: payload,
+  })
+    .then((res) => {
+      setTimeout(() => {
+        console.log(res);
+        const { data } = res;
+        data.isTweetLiked
+          ? dispatch(LikeTweetSuccess({ likes: data.likes, id: data.id }))
+          : dispatch(LikeTweetFailure(res.errormsg));
+      }, 1000);
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(LikeTweetFailure(err));
     });
 };

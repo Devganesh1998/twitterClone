@@ -23,6 +23,7 @@ const initialState = {
   addTweetError: false,
   addTweetErrorMessage: "",
 
+  likeTweetLoading: [],
   likeTweetSending: false,
   likeTweetSent: false,
   likeTweetError: false,
@@ -38,15 +39,18 @@ const Reducer = (state = initialState, action) => {
       return {
         ...state,
         tweets: [],
+        likeTweetLoading: [],
         isGetAllTweetsSending: true,
         isGetAllTweetsSent: false,
         isGetAllTweetsError: false,
         getTweetErrorMessage: "",
       };
     case GET_ALL_TWEETS_SUCCESS:
+      action.tweets.forEach((ele) => state.likeTweetLoading.push(false));
       return {
         ...state,
-        tweets: [...state.tweets, ...action.tweets],
+        tweets: [...action.tweets],
+        likeTweetLoading: [...state.likeTweetLoading],
         isGetAllTweetsSending: false,
         isGetAllTweetsSent: true,
       };
@@ -82,8 +86,13 @@ const Reducer = (state = initialState, action) => {
         addTweetErrorMessage: action.error,
       };
     case LIKE_TWEET_REQUEST:
+      const likeTweetIndex = state.tweets.findIndex(
+        (ele) => ele.id === action.payload
+      );
+      state.likeTweetLoading[likeTweetIndex] = true;
       return {
         ...state,
+        likeTweetLoading: [...state.likeTweetLoading],
         likeTweetSending: true,
         likeTweetSent: false,
         likeTweetError: false,
@@ -93,11 +102,11 @@ const Reducer = (state = initialState, action) => {
       const { id, likes } = action.payload;
       const tweetIndex = state.tweets.findIndex((element) => element.id === id);
       state.tweets[tweetIndex].likes = likes;
+      state.likeTweetLoading[tweetIndex] = false;
       return {
         ...state,
-        tweets: [
-          ...state.tweets,      
-        ],
+        likeTweetLoading: [...state.likeTweetLoading],
+        tweets: [...state.tweets],
         likeTweetSending: false,
         likeTweetSent: true,
       };

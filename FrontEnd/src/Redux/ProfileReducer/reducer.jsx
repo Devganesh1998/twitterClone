@@ -14,11 +14,15 @@ import {
   UN_FOLLOW_USER_REQUEST,
   UN_FOLLOW_USER_SUCCESS,
   UN_FOLLOW_USER_FAILURE,
+  SELF_LIKE_TWEET_REQUEST,
+  SELF_LIKE_TWEET_SUCCESS,
+  SELF_LIKE_TWEET_FAILURE,
 } from "./actionType";
 
 const initialState = {
   userProfile: {},
   userTweets: [],
+  userTweetsLoading: [],
   allProfiles: [],
 
   isGetProfSending: false,
@@ -30,6 +34,11 @@ const initialState = {
   isallProfSent: false,
   isallProfError: false,
   allProfileErrorMessage: "",
+
+  likeTweetSending: false,
+  likeTweetSent: false,
+  likeTweetError: false,
+  likeTweetErrorMessage: "",
 
   isUserTweetSending: false,
   isUserTweetSent: false,
@@ -76,15 +85,18 @@ const Reducer = (state = initialState, action) => {
       return {
         ...state,
         userTweets: [],
+        userTweetsLoading: [],
         isUserTweetSending: true,
         isUserTweetSent: false,
         isUserTweetError: false,
         UserTweetErrorMessage: "",
       };
     case GET_USER_TWEETS_SUCCESS:
+      action.payload.forEach((ele) => state.userTweetsLoading.push(false));
       return {
         ...state,
         userTweets: action.payload,
+        userTweetsLoading: [...state.userTweetsLoading],
         isUserTweetSending: false,
         isUserTweetSent: true,
       };
@@ -172,6 +184,41 @@ const Reducer = (state = initialState, action) => {
         unfollowUserSending: true,
         unfollowUserError: true,
         unfollowErrorMessage: action.error,
+      };
+    case SELF_LIKE_TWEET_REQUEST:
+      const likeTweetIndex = state.userTweets.findIndex(
+        (ele) => ele.id === action.payload
+      );
+      state.userTweetsLoading[likeTweetIndex] = true;
+      console.log("req", state.userTweetsLoading);
+      return {
+        ...state,
+        userTweetsLoading: [...state.userTweetsLoading],
+        likeTweetSending: true,
+        likeTweetSent: false,
+        likeTweetError: false,
+        likeTweetErrorMessage: "",
+      };
+    case SELF_LIKE_TWEET_SUCCESS:
+      const { id, likes } = action.payload;
+      const tweetIndex = state.userTweets.findIndex((element) => element.id === id);
+      state.userTweets[tweetIndex].likes = likes;
+      state.userTweetsLoading[tweetIndex] = false;
+      console.log("req", state.userTweetsLoading);
+      return {
+        ...state,
+        userTweetsLoading: [...state.userTweetsLoading],
+        userTweets: [...state.userTweets],
+        likeTweetSending: false,
+        likeTweetSent: true,
+      };
+    case SELF_LIKE_TWEET_FAILURE:
+      return {
+        ...state,
+        likeTweetSending: false,
+        likeTweetSent: false,
+        likeTweetError: true,
+        likeTweetErrorMessage: action.error,
       };
     default:
       return state;

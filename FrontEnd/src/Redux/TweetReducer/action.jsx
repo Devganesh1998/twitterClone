@@ -52,9 +52,10 @@ const addNewTweetFailure = (error) => {
   };
 };
 
-const requestLikeTweet = () => {
+const requestLikeTweet = (payload) => {
   return {
     type: LIKE_TWEET_REQUEST,
+    payload,
   };
 };
 
@@ -118,7 +119,7 @@ export const addNewTweet = (payload) => (dispatch) => {
 };
 
 export const likeTweet = (payload) => (dispatch) => {
-  dispatch(requestLikeTweet());
+  dispatch(requestLikeTweet(payload.tweetId));
   axios({
     method: "POST",
     url: "http://localhost:5000/tweet/like",
@@ -126,10 +127,13 @@ export const likeTweet = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
-      const { data } = res;
-      data.isTweetLiked
-        ? dispatch(LikeTweetSuccess({ likes: data.likes, id: data.id }))
-        : dispatch(LikeTweetFailure(res.errormsg));
+      setTimeout(() => {
+        console.log(res);
+        const { data } = res;
+        data.isTweetLiked
+          ? dispatch(LikeTweetSuccess({ likes: data.likes, id: data.id }))
+          : dispatch(LikeTweetFailure(res.errormsg));
+      }, 1000);
     })
     .catch((err) => {
       console.log(err);

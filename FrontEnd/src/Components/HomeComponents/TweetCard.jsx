@@ -71,6 +71,7 @@ export default class TweetCard extends React.PureComponent {
             size="large"
             loading={likeTweetSending}
             onClick={this.handleLikeTweet}
+            disabled={likeTweetSending}
           >
             {likes} Likes
           </Button>,

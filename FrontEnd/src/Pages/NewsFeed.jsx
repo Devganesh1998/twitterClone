@@ -38,7 +38,7 @@ class NewsFeed extends React.Component {
       tweets,
       likeTweet,
       email,
-      likeTweetSending,
+      likeTweetLoading,
       addTweetSending,
       isGetAllTweetsSending,
     } = this.props;
@@ -59,10 +59,10 @@ class NewsFeed extends React.Component {
             <p></p>
           )}
           {tweets &&
-            tweets.map((element) => {
+            tweets.map((element, index) => {
               return (
                 <TweetCard
-                  likeTweetSending={likeTweetSending}
+                  likeTweetSending={likeTweetLoading[index]}
                   likeTweet={likeTweet}
                   email={email}
                   {...element}
@@ -91,7 +91,7 @@ class NewsFeed extends React.Component {
 const mapStateToProps = (state) => {
   return {
     tweets: state.tweet.tweets,
-    likeTweetSending: state.tweet.likeTweetSending,
+    likeTweetLoading: state.tweet.likeTweetLoading,
     addTweetSending: state.tweet.addTweetSending,
     isGetAllTweetsSending: state.tweet.isGetAllTweetsSending,
     email: state.auth.email,
