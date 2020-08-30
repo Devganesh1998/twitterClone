@@ -15,7 +15,7 @@ class ListAllUsers extends React.Component {
   }
 
   render() {
-    const { allProfiles, FollowUser, unFollowUser, email } = this.props;
+    const { allProfiles, FollowUser, unFollowUser, email, followUserSending, unfollowUserSending } = this.props;
     return (
       <div>
         {allProfiles &&
@@ -24,6 +24,8 @@ class ListAllUsers extends React.Component {
               key={Element.id}
               FollowUser={FollowUser}
               unFollowUser={unFollowUser}
+              followUserSending={followUserSending}
+              unfollowUserSending={unfollowUserSending}
               currEmail={email}
               {...Element}
             />
@@ -36,6 +38,8 @@ class ListAllUsers extends React.Component {
 const mapStateToProps = (state) => {
   return {
     allProfiles: state.profile.allProfiles,
+    followUserSending: state.profile.followUserSending,
+    unfollowUserSending: state.profile.unfollowUserSending,
     email: state.auth.email,
   };
 };

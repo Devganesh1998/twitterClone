@@ -29,7 +29,7 @@ class NewsFeed extends React.Component {
   };
 
   render() {
-    const { tweets, likeTweet, email } = this.props;
+    const { tweets, likeTweet, email, likeTweetSending } = this.props;
     return (
       <React.Fragment>
         <div>
@@ -38,7 +38,7 @@ class NewsFeed extends React.Component {
         <div>
           {tweets &&
             tweets.map((element) => {
-              return <TweetCard likeTweet={likeTweet} email={email} {...element} key={element.id}/>;
+              return <TweetCard likeTweetSending={likeTweetSending} likeTweet={likeTweet} email={email} {...element} key={element.id}/>;
             })}
           <Button
             type="primary"
@@ -56,6 +56,7 @@ class NewsFeed extends React.Component {
 const mapStateToProps = (state) => {
   return {
     tweets: state.tweet.tweets,
+    likeTweetSending: state.tweet.likeTweetSending,
     email: state.auth.email,
   };
 };

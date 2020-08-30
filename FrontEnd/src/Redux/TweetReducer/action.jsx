@@ -126,13 +126,6 @@ export const likeTweet = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
-      console.log(res.data);
-      // dispatch(
-      //   fetchAllTweets({
-      //     page: 1,
-      //     email: payload.likedUserMail,
-      //   })
-      // );
       const { data } = res;
       data.isTweetLiked
         ? dispatch(LikeTweetSuccess({ likes: data.likes, id: data.id }))

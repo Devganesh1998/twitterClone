@@ -32,6 +32,7 @@ export default class TweetCard extends React.PureComponent {
       userTag,
       followingCount,
       followersCount,
+      likeTweetSending,
     } = this.props;
     const { src } = this.state;
     return (
@@ -44,8 +45,9 @@ export default class TweetCard extends React.PureComponent {
               padding: "10px",
               justifyContent: "space-evenly",
               alignItems: "center",
-              backgroundImage: "url('https://lh3.googleusercontent.com/fXWKkS5OcyOPZimNU1_lCdOAESs-Hgy53TikRH7cofRLmc4W5HOZySqU6-S7_biQjYM')",
-              backgroundSize: "auto"
+              backgroundImage:
+                "url('https://lh3.googleusercontent.com/fXWKkS5OcyOPZimNU1_lCdOAESs-Hgy53TikRH7cofRLmc4W5HOZySqU6-S7_biQjYM')",
+              backgroundSize: "auto",
             }}
           >
             <img
@@ -67,6 +69,7 @@ export default class TweetCard extends React.PureComponent {
             shape="round"
             icon={<LikeOutlined />}
             size="large"
+            loading={likeTweetSending}
             onClick={this.handleLikeTweet}
           >
             {likes} Likes

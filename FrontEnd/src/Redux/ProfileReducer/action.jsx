@@ -104,9 +104,10 @@ const requestunFollow = () => {
   };
 };
 
-const unFollowSuccess = () => {
+const unFollowSuccess = (payload) => {
   return {
     type: UN_FOLLOW_USER_SUCCESS,
+    payload
   };
 };
 
@@ -179,9 +180,7 @@ export const FollowUser = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
-      console.log(res.data);
       const { data } = res;
-      // dispatch(getAllProfiles());
       data.isProfileFollowed
         ? dispatch(FollowSuccess(data.updatedProfile))
         : dispatch(FollowFailure(res.errormsg));
@@ -201,11 +200,9 @@ export const unFollowUser = (payload) => (dispatch) => {
     data: payload,
   })
     .then((res) => {
-      console.log(res.data);
-      dispatch(getAllProfiles());
       const { data } = res;
       data.isProfileUnfollowed
-        ? dispatch(unFollowSuccess())
+        ? dispatch(unFollowSuccess(data.updatedProfile))
         : dispatch(unFollowFailure(res.errormsg));
     })
     .catch((err) => {

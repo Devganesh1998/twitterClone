@@ -44,6 +44,8 @@ export default class TweetCard extends React.PureComponent {
       followingCount,
       joined,
       dob,
+      followUserSending,
+      unfollowUserSending,
       isFollowing,
       posterImgUrl,
       isFollowActionAvail = true,
@@ -87,6 +89,7 @@ export default class TweetCard extends React.PureComponent {
                     shape="round"
                     icon={<UserDeleteOutlined />}
                     size="large"
+                    loading={unfollowUserSending} 
                     onClick={this.handleUnFollow}
                   >
                     UnFollow
@@ -96,6 +99,7 @@ export default class TweetCard extends React.PureComponent {
                     type="primary"
                     shape="round"
                     icon={<UserAddOutlined />}
+                    loading={followUserSending} 
                     size="large"
                     onClick={this.handleFollow}
                   >

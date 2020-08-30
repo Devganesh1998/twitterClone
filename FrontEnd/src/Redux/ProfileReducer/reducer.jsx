@@ -127,8 +127,13 @@ const Reducer = (state = initialState, action) => {
         isFollowSuccess: false,
       };
     case FOLLOW_USER_SUCCESS:
+      const profileIndex = state.allProfiles.findIndex(
+        (element) => element.id === action.payload.id
+      );
+      state.allProfiles[profileIndex] = action.payload;
       return {
         ...state,
+        allProfiles: [...state.allProfiles],
         followUserSending: false,
         followUserSent: true,
         isFollowSuccess: true,
@@ -150,8 +155,13 @@ const Reducer = (state = initialState, action) => {
         isUnFollowSuccess: false,
       };
     case UN_FOLLOW_USER_SUCCESS:
+      const profileIndex2 = state.allProfiles.findIndex(
+        (element) => element.id === action.payload.id
+      );
+      state.allProfiles[profileIndex2] = action.payload;
       return {
         ...state,
+        allProfiles: [...state.allProfiles],
         unfollowUserSending: false,
         unfollowUserSent: true,
         isUnFollowSuccess: true,
