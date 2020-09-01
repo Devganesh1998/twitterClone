@@ -30,6 +30,11 @@ const AuthPage = ({ loginUser, registerUser, is_auth, ...rest }) => {
       {...rest}
     >
       <TabPane tab="Login" key="login">
+        <div style={{margin: "20px"}}>
+          <h3>Demo EmailId and Password</h3>
+          <h4>Email Id : test</h4>
+          <h4>Password : test</h4>
+        </div>
         <LoginForm loginUser={loginUser} />
       </TabPane>
       <TabPane tab="Register" key="register">

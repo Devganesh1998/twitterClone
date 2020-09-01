@@ -148,7 +148,7 @@ export const fetchUserTweets = (payload) => (dispatch) => {
   dispatch(requestUserTweets());
   axios({
     method: "GET",
-    url: `http://localhost:5000/profile/getTweets?userEmail=${payload.email}`,
+    url: `https://twittercloneserver.herokuapp.com/profile/getTweets?userEmail=${payload.email}`,
     headers: { "Content-Type": "application/json;charset=utf-8" },
   })
     .then((res) => {
@@ -170,7 +170,7 @@ export const getProfile = (payload) => (dispatch) => {
   dispatch(requestGetProfile());
   axios({
     method: "GET",
-    url: `http://localhost:5000/profile?userEmail=${payload.email}`,
+    url: `https://twittercloneserver.herokuapp.com/profile?userEmail=${payload.email}`,
     headers: { "Content-Type": "application/json;charset=utf-8" },
   })
     .then((res) => {
@@ -186,7 +186,7 @@ export const getAllProfiles = () => (dispatch) => {
   dispatch(requestAllProfile());
   axios({
     method: "GET",
-    url: `http://localhost:5000/user/getUsersToExplore`,
+    url: `https://twittercloneserver.herokuapp.com/user/getUsersToExplore`,
     headers: { "Content-Type": "application/json;charset=utf-8" },
   })
     .then((res) => {
@@ -203,7 +203,7 @@ export const FollowUser = (payload) => (dispatch) => {
   dispatch(requestFollow(payload.parentId));
   axios({
     method: "POST",
-    url: "http://localhost:5000/profile/follow",
+    url: "https://twittercloneserver.herokuapp.com/profile/follow",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })
@@ -223,7 +223,7 @@ export const unFollowUser = (payload) => (dispatch) => {
   dispatch(requestunFollow(payload.parentId));
   axios({
     method: "POST",
-    url: "http://localhost:5000/profile/unfollow",
+    url: "https://twittercloneserver.herokuapp.com/profile/unfollow",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })
@@ -243,7 +243,7 @@ export const SelflikeTweet = (payload) => (dispatch) => {
   dispatch(requestLikeTweet(payload.tweetId));
   axios({
     method: "POST",
-    url: "http://localhost:5000/tweet/like",
+    url: "https://twittercloneserver.herokuapp.com/tweet/like",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })

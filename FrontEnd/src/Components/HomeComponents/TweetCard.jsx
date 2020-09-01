@@ -37,6 +37,7 @@ export default class TweetCard extends React.PureComponent {
     const { src } = this.state;
     return (
       <Card
+        style={{width: "350px"}}
         hoverable
         cover={
           <div

@@ -99,7 +99,7 @@ export const registerUser = (payload) => (dispatch) => {
   dispatch(requestRegister());
   axios({
     method: "POST",
-    url: "http://localhost:5000/user/register",
+    url: "https://twittercloneserver.herokuapp.com/user/register",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })
@@ -121,7 +121,7 @@ export const loginUser = (payload) => (dispatch) => {
   dispatch(requestLogin());
   axios({
     method: "POST",
-    url: "http://localhost:5000/user/login",
+    url: "https://twittercloneserver.herokuapp.com/user/login",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })
@@ -138,7 +138,7 @@ export const logoutUser = (payload) => (dispatch) => {
   dispatch(requestLogout());
   axios({
     method: "GET",
-    url: "http://localhost:5000/user/logout",
+    url: "https://twittercloneserver.herokuapp.com/user/logout",
     headers: { "Content-Type": "application/json;charset=utf-8" },
   })
     .then((res) => {
@@ -154,7 +154,7 @@ export const verifyAuth = (payload) => (dispatch) => {
   dispatch(requestVerifyAuth());
   axios({
     method: "GET",
-    url: "http://localhost:5000/user/verifyAuth",
+    url: "https://twittercloneserver.herokuapp.com/user/verifyAuth",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })

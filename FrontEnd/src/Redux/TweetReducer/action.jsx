@@ -77,7 +77,7 @@ export const fetchAllTweets = (payload) => (dispatch) => {
   dispatch(requestAllTweets());
   axios({
     method: "POST",
-    url: "http://localhost:5000/tweet/getall",
+    url: "https://twittercloneserver.herokuapp.com/tweet/getall",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })
@@ -99,7 +99,7 @@ export const addNewTweet = (payload) => (dispatch) => {
   dispatch(requestAddNewTweet());
   axios({
     method: "POST",
-    url: "http://localhost:5000/tweet/add",
+    url: "https://twittercloneserver.herokuapp.com/tweet/add",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })
@@ -122,7 +122,7 @@ export const likeTweet = (payload) => (dispatch) => {
   dispatch(requestLikeTweet(payload.tweetId));
   axios({
     method: "POST",
-    url: "http://localhost:5000/tweet/like",
+    url: "https://twittercloneserver.herokuapp.com/tweet/like",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     data: payload,
   })
