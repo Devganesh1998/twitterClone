@@ -65,7 +65,12 @@ git clone https://github.com/Devganesh1998/twitterClone.git
   - install dependencies
 
     ```bash
-    pip install requirements.txt
+    pip install -r requirements.txt
+    ```
+    If pip was not found, use pip3
+    
+    ```bash
+    pip3 install -r requirements.txt
     ```
 
   - Run Flask App
